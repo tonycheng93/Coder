@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Coder</string>
+
+
+    <string name="add_avator">头像</string>
+    <string name="tips">提示</string>
+</resources>
