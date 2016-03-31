@@ -39,15 +39,14 @@ public class HeaderLayout extends LinearLayout {
     LinearLayout mLayoutRightContainer;
     @Bind(R.id.header_htv_subtitle)
     TextView mHtvSubTitle;
-    @Bind(R.id.header_layout_imagebuttonlayout)
-    LinearLayout mLayoutRightImageButtonLayout;
-    @Bind(R.id.header_ib_imagebutton)
-    Button mRightImageButton;
+
+
+    private LinearLayout mLayoutRightImageButtonLayout;
+    private Button mRightImageButton;
     private onRightImageButtonClickListener mRightImageButtonClickListener;
-    @Bind(R.id.header_layout_imagebuttonlayout)
-    LinearLayout mLayoutLeftImageButtonLayout;
-    @Bind(R.id.header_ib_imagebutton)
-    ImageButton mLeftImageButton;
+
+    private LinearLayout mLayoutLeftImageButtonLayout;
+    private ImageButton mLeftImageButton;
     private onLeftImageButtonClickListener mLeftImageButtonClickListener;
 
     public enum HeaderStyle {//头部整体样式
@@ -71,14 +70,13 @@ public class HeaderLayout extends LinearLayout {
         mInflater = LayoutInflater.from(context);
         mHeader = mInflater.inflate(R.layout.common_header, null);
 
-        ButterKnife.bind(mHeader);
-
         addView(mHeader);
+
         initViews();
     }
 
     private void initViews() {
-
+        ButterKnife.bind(this, mHeader);
     }
 
     public View findViewByHeaderId(int id) {
@@ -110,8 +108,11 @@ public class HeaderLayout extends LinearLayout {
     private void titleRightImageButton() {
         View mRightImageButtonView = mInflater.inflate(R.layout.common_header_rightbutton, null);
         mLayoutRightContainer.addView(mRightImageButtonView);
-        ButterKnife.bind(mRightImageButtonView);
 
+        mLayoutRightImageButtonLayout = (LinearLayout) mRightImageButtonView.
+                findViewById(R.id.header_layout_imagebuttonlayout);
+        mRightImageButton = (Button) mRightImageButtonView.findViewById(
+                R.id.header_ib_imagebutton);
         mLayoutRightImageButtonLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,8 +127,10 @@ public class HeaderLayout extends LinearLayout {
     private void titleLeftImageButton() {
         View mLeftImageButtonView = mInflater.inflate(R.layout.common_header_button, null);
         mLayoutLeftContainer.addView(mLeftImageButtonView);
-        ButterKnife.bind(mLeftImageButtonView);
 
+        mLayoutLeftImageButtonLayout = (LinearLayout) mLeftImageButtonView.findViewById(
+                R.id.header_layout_imagebuttonlayout);
+        mLeftImageButton = (ImageButton) mLeftImageButtonView.findViewById(R.id.header_ib_imagebutton);
         mLayoutLeftImageButtonLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,7 +181,7 @@ public class HeaderLayout extends LinearLayout {
     }
 
     public void setTitleAndRightImageButton(CharSequence title, int backid,
-                                       onRightImageButtonClickListener onRightImageButtonClickListener) {
+                                            onRightImageButtonClickListener onRightImageButtonClickListener) {
         setDefaultTitle(title);
         mLayoutRightContainer.setVisibility(VISIBLE);
         if (mRightImageButton != null && backid > 0) {

@@ -3,61 +3,61 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/theme_bg_color"
-              android:orientation="vertical" >
+              android:orientation="vertical">
 
     <include
         android:id="@+id/common_actionbar"
-        layout="@layout/include_action_bar" />
+        layout="@layout/include_action_bar"/>
 
-    <LinearLayout style="@style/Register_Input" >
+    <LinearLayout style="@style/Register_Input">
 
         <TextView
-            style="@style/txt_Black"
+            style="@style/Coder.TextView.Black"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="@string/login_account"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/et_username"
             style="@style/Register_Edit"
-            android:hint="@string/login_username_hint" />
+            android:hint="@string/login_username_hint"/>
     </LinearLayout>
 
-    <LinearLayout style="@style/Register_Input" >
+    <LinearLayout style="@style/Register_Input">
 
         <TextView
-            style="@style/txt_Black"
+            style="@style/Coder.TextView.Black"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="@string/login_pwd"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/et_password"
             style="@style/Register_Edit"
-            android:inputType="textPassword"
-            android:hint="@string/login_password_hint" />
+            android:hint="@string/login_password_hint"
+            android:inputType="textPassword"/>
     </LinearLayout>
 
     <LinearLayout
-        style="@style/Register_Input" >
+        style="@style/Register_Input">
 
         <TextView
-            style="@style/txt_Black"
+            style="@style/Coder.TextView.Black"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="@string/login_email"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/et_email"
             style="@style/Register_Edit"
-            android:inputType="textPassword"
-            android:hint="@string/login_email_hint" />
+            android:hint="@string/login_email_hint"
+            android:inputType="textPassword"/>
     </LinearLayout>
 
     <Button
@@ -68,6 +68,6 @@
         android:background="@drawable/btn_login_selector"
         android:text="@string/register"
         android:textColor="@color/base_color_text_white"
-        android:textSize="@dimen/text_size_large" />
+        android:textSize="@dimen/text_size_large"/>
 
 </LinearLayout>

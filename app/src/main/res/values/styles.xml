@@ -55,10 +55,21 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="txt_Orange">
+    <style name="Coder">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="Coder.TextView">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="Coder.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/base_action_bar_height</item>
+    </style>
+    <style name="Coder.TextView.Orange">
         <item name="android:textColor">@color/dialog_color_title</item>
     </style>
-    <style name="txt_Black">
+    <style name="Coder.TextView.Black">
         <item name="android:textColor">@color/base_color_text_black</item>
     </style>
 

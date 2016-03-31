@@ -34,7 +34,7 @@ public class SplashActivity extends BaseActivity {
                     finish();
                     break;
                 case GO_LOGIN:
-                    startAnimActivity(MainActivity.class);
+                    startAnimActivity(LoginActivity.class);
                     finish();
                     break;
                 default:
