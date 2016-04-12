@@ -13,11 +13,8 @@ package com.tony.coder.im.entity;
 public class FaceText {
     public String text;
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
+    public FaceText(String text) {
+        super();
         this.text = text;
     }
 }

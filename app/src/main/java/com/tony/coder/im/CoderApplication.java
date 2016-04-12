@@ -204,7 +204,7 @@ public class CoderApplication extends Application {
         return mInstance;
     }
 
-    //单例模式，才能及时返回数据
+    /*单例模式，才能及时返回数据*/
     SharePreferenceUtil mSpUtil;
     public static final String PREFERENCE_NAME = "_sharedinfo";
 

@@ -92,7 +92,7 @@ public class RegisterActivity extends BaseActivity {
                 //发送广播通知和登录页面退出
                 sendBroadcast(new Intent(Constants.ACTION_REGISTER_SUCCESS_FINISH));
                 //启动主页
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
             }

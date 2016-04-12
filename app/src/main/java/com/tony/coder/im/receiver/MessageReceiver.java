@@ -7,7 +7,7 @@ import android.text.TextUtils;
 
 import com.tony.coder.R;
 import com.tony.coder.im.CoderApplication;
-import com.tony.coder.im.ui.activity.MainActivity;
+import com.tony.coder.im.ui.activity.HomeActivity;
 import com.tony.coder.im.ui.activity.NewFriendActivity;
 import com.tony.coder.im.util.CollectionUtils;
 import com.tony.coder.im.util.CommonUtils;
@@ -158,7 +158,7 @@ public class MessageReceiver extends BroadcastReceiver {
                                 }
                             });
                             //显示通知
-                            showOtherNotify(context, username, toId, username + "同意添加您为好友", MainActivity.class);
+                            showOtherNotify(context, username, toId, username + "同意添加您为好友", HomeActivity.class);
                             ////创建一个临时验证会话--用于在会话界面形成初始会话
                             BmobMsg.createAndSaveRecentAfterAgree(context, json);
                         } else if (tag.equals(BmobConfig.TAG_READED)) {//已读回执
@@ -213,7 +213,7 @@ public class MessageReceiver extends BroadcastReceiver {
         CharSequence tickerText = msg.getBelongUsername() + ":" + trueMsg;
         String contentTitle = msg.getBelongUsername() + "(" + mNewNum + "条新消息）";
 
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         boolean isAllowVoice = CoderApplication.getInstance().getSpUtil().isAllowVoice();

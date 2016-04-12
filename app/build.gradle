@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
     defaultConfig {
@@ -22,14 +22,15 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:21.0.0'
     compile files('libs/locSDK_4.2.jar')
     compile files('libs/BmobSDK_V3.4.3_0820.jar')
     compile files('libs/BmobIM_V1.1.9beta_20150820.jar')
     compile files('libs/baidumapapi_v3_0_0.jar')
     compile files('libs/photoview-library-1.2.2.jar')
-    compile files('libs/universal-image-loader-1.9.2_sources.jar')
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.orhanobut:logger:1.11'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
 }

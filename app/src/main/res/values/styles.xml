@@ -72,6 +72,33 @@
     <style name="Coder.TextView.Black">
         <item name="android:textColor">@color/base_color_text_black</item>
     </style>
+    <style name="Coder.TextView.White">
+        <item name="android:textColor">@color/base_color_text_white</item>
+    </style>
+    <style name="Coder.TextView.Gray">
+        <item name="android:textColor">@color/base_color_text_gray</item>
+    </style>
+
+    <style name="Coder.ImageView">
+        <item name="android:contentDescription">@string/app_name</item>
+    </style>
+    <style name="Coder.ImageView.Photo_Large">
+        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_height">75dp</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+    <style name="Coder.ImageView.Photo_Middle">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+
+    <style name="Coder.ImageView.Photo_Small">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+
 
     <style name="Register_Input">
         <item name="android:orientation">horizontal</item>

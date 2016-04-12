@@ -35,4 +35,8 @@
     <color name="guide_color">#898989</color>
 
     <color name="common_bg">#fcfcfc</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="grey">#9E9E9E</color>
+    <color name="green">#388E3C</color>
 </resources>
