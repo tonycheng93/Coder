@@ -4,16 +4,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.tony.coder.R;
 import com.tony.coder.im.ui.activity.ChatActivity;
 import com.tony.coder.im.ui.adapter.MessageRecentAdapter;
+import com.tony.coder.im.view.ClearEditText;
 import com.tony.coder.im.view.dialog.DialogTips;
-import com.tony.coder.im.view.xlist.XListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +41,10 @@ public class ChatFragment extends BaseFragment implements
         AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     View mView;
-    //    @Bind(R.id.et_msg_search)
-//    ClearEditText mClearEditText;
+    @Bind(R.id.et_msg_search)
+    ClearEditText mClearEditText;
     @Bind(R.id.list)
-    XListView mXListView;
+    ListView mListView;
 
     private MessageRecentAdapter mAdapter;
     private List<BmobRecent> mDatas = new ArrayList<>();
@@ -57,34 +60,34 @@ public class ChatFragment extends BaseFragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mDatas = BmobDB.create(getActivity()).queryRecents();
+//        mDatas = BmobDB.create(getActivity()).queryRecents();
         initView();
     }
 
     private void initView() {
         initTopBarForOnlyTitle("会话");
-        mXListView.setOnItemClickListener(this);
-        mXListView.setOnItemLongClickListener(this);
+        mListView.setOnItemClickListener(this);
+        mListView.setOnItemLongClickListener(this);
         mAdapter = new MessageRecentAdapter(getActivity(), R.layout.item_conversation, BmobDB.create(getActivity()).queryRecents());
-        mXListView.setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
 
 
-//        mClearEditText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-////                mAdapter.getFilter().filter(charSequence);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//            }
-//        });
+        mClearEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mAdapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     /**
@@ -118,7 +121,7 @@ public class ChatFragment extends BaseFragment implements
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         BmobRecent recent = mAdapter.getItem(position);
         showDeleteDialog(recent);
-        return false;
+        return true;
     }
 
     public void showDeleteDialog(final BmobRecent bmobRecent) {
@@ -161,7 +164,7 @@ public class ChatFragment extends BaseFragment implements
                 @Override
                 public void run() {
                     mAdapter = new MessageRecentAdapter(getActivity(), R.layout.item_conversation, BmobDB.create(getActivity()).queryRecents());
-                    mXListView.setAdapter(mAdapter);
+                    mListView.setAdapter(mAdapter);
                 }
             });
         } catch (Exception e) {

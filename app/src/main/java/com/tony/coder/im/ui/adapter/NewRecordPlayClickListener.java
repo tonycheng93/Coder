@@ -174,7 +174,7 @@ public class NewRecordPlayClickListener implements View.OnClickListener {
             dir.mkdirs();
         }
         //当前用户的目录下面存放录音文件
-        File audioFile = new File(dir.getAbsolutePath() + File.separator + message.getMsgTime());
+        File audioFile = new File(dir.getAbsolutePath() + File.separator + message.getMsgTime() + ".amr");
         try {
             if (!audioFile.exists()) {
                 audioFile.createNewFile();

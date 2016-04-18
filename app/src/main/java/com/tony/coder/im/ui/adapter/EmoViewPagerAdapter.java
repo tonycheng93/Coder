@@ -1,7 +1,9 @@
 package com.tony.coder.im.ui.adapter;
 
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -17,16 +19,30 @@ import java.util.List;
  */
 public class EmoViewPagerAdapter extends PagerAdapter {
 
+    private List<View> views;
+
     public EmoViewPagerAdapter(List<View> views) {
+        this.views = views;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return views.size() > 0 ? views.size() : 0;
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return false;
+        return view == object;
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        ((ViewPager) container).addView(views.get(position));
+        return views.get(position);
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        ((ViewPager) container).removeView(views.get(position));
     }
 }

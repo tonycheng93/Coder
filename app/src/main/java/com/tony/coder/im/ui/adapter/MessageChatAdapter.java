@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.tony.coder.R;
 import com.tony.coder.im.ui.activity.ImageBrowserActivity;
@@ -340,19 +339,19 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
                                TextView tv_send_status, ImageView iv_picture, BmobMsg item) {
         String text = item.getContent();
         if (getItemViewType(position) == TYPE_SEND_IMAGE) {//发送的消息
-            if (item.getStatus() == BmobConfig.STATUS_SEND_START){
+            if (item.getStatus() == BmobConfig.STATUS_SEND_START) {
                 progress_load.setVisibility(View.VISIBLE);
                 iv_fail_resend.setVisibility(View.INVISIBLE);
                 tv_send_status.setVisibility(View.INVISIBLE);
-            }else if (item.getStatus() == BmobConfig.STATUS_SEND_SUCCESS){
+            } else if (item.getStatus() == BmobConfig.STATUS_SEND_SUCCESS) {
                 progress_load.setVisibility(View.INVISIBLE);
                 iv_fail_resend.setVisibility(View.INVISIBLE);
                 tv_send_status.setText("已发送");
-            }else if (item.getStatus() == BmobConfig.STATUS_SEND_FAIL){
+            } else if (item.getStatus() == BmobConfig.STATUS_SEND_FAIL) {
                 progress_load.setVisibility(View.INVISIBLE);
                 iv_fail_resend.setVisibility(View.VISIBLE);
                 tv_send_status.setVisibility(View.INVISIBLE);
-            }else if (item.getStatus() == BmobConfig.STATUS_SEND_RECEIVERED){
+            } else if (item.getStatus() == BmobConfig.STATUS_SEND_RECEIVERED) {
                 progress_load.setVisibility(View.INVISIBLE);
                 iv_fail_resend.setVisibility(View.INVISIBLE);
                 tv_send_status.setVisibility(View.VISIBLE);
@@ -361,26 +360,15 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
  /*           如果是发送的图片的话，因为开始发送存储的地址是本地地址，
             发送成功之后存储的是本地地址+"&"+网络地址，因此需要判断下*/
             String showUrl = "";
-            if (text.contains("&")){
+            if (text.contains("&")) {
                 showUrl = text.split("&")[0];
-            }else {
+            } else {
                 showUrl = text;
             }
             //为了方便每次都是取本地的图片显示
-            ImageLoaderUtils.display(mContext,iv_picture,showUrl);
-        }else {
-            ImageLoaderUtils.display(mContext,iv_picture,text);
-        }
-    }
-
-    private class NewRecordPlayClickListener implements View.OnClickListener {
-        public NewRecordPlayClickListener(Context context, BmobMsg item, ImageView iv_voice) {
-
-        }
-
-        @Override
-        public void onClick(View v) {
-
+            ImageLoaderUtils.display(mContext, iv_picture, showUrl);
+        } else {
+            ImageLoaderUtils.display(mContext, iv_picture, text);
         }
     }
 }
