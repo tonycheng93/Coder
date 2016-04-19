@@ -92,7 +92,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <!-- baidu map -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -150,6 +149,17 @@
         </activity>
         <activity android:name=".im.ui.activity.ChatActivity">
         </activity>
+        <activity android:name=".im.ui.activity.BaseActivity">
+        </activity>
+        <activity android:name=".im.ui.activity.SetMyInfoActivity">
+        </activity>
+        <activity android:name=".im.ui.activity.LocationActivity"/>
+        <activity android:name=".im.ui.activity.BlackListActivity"/>
+        <activity android:name=".im.ui.activity.UpdateInfoActivity"/>
+        <activity android:name=".im.ui.activity.ImageBrowserActivity"/>
+        <activity android:name=".im.ui.activity.NearPeopleActivity"/>
+        <activity android:name=".im.ui.activity.ActivityBase"/>
+        <activity android:name=".im.ui.activity.AddFriendActivity"/>
     </application>
 
 </manifest>

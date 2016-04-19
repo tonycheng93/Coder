@@ -57,7 +57,7 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
     String currentObjectId = "";
 
     public MessageChatAdapter(Context context, List<BmobMsg> list) {
-        super(list, context);
+        super(context, list);
         currentObjectId = BmobUserManager.getInstance(context).getCurrentUserObjectId();
     }
 
@@ -118,7 +118,7 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
         ImageView iv_picture = ViewHolder.getView(convertView, R.id.iv_picture);
         final ProgressBar progress_load = ViewHolder.getView(convertView, R.id.progress_load);
         //位置
-        TextView tv_loccation = ViewHolder.getView(convertView, R.id.tv_location);
+        TextView tv_location = ViewHolder.getView(convertView, R.id.tv_location);
         //语音
         final ImageView iv_voice = ViewHolder.getView(convertView, R.id.iv_voice);
         //语音的长度
@@ -227,8 +227,8 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
                         String address = text.split("&")[0];
                         final String latitude = text.split("&")[1];//纬度
                         final String longtitude = text.split("&")[2];//经度
-                        tv_loccation.setText(address);
-                        tv_loccation.setOnClickListener(new View.OnClickListener() {
+                        tv_location.setText(address);
+                        tv_location.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(mContext, LocationActivity.class);

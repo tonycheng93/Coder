@@ -9,7 +9,7 @@
         android:id="@+id/common_actionbar"
         layout="@layout/include_action_bar" />
 
-   <!-- <com.bmob.im.demo.view.ClearEditText
+    <com.tony.coder.im.view.ClearEditText
         android:id="@+id/et_msg_search"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/base_action_bar_height"
@@ -20,10 +20,10 @@
         android:hint="@string/message_search_hint"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:visibility="gone"
-        android:singleLine="true" />-->
+        android:visibility="visible"
+        android:singleLine="true" />
 
-    <com.tony.coder.im.view.xlist.XListView
+    <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

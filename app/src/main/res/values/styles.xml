@@ -59,22 +59,36 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="Coder.TextView">
         <item name="android:textSize">18sp</item>
     </style>
+
     <style name="Coder.Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/base_action_bar_height</item>
     </style>
+
+    <style name="Coder.Button.theme" parent="Coder.TextView.White">
+        <item name="android:background">@drawable/btn_login_selector</item>
+    </style>
+
+    <style name="Coder.Button.logout" parent="Coder.TextView.White">
+        <item name="android:background">@drawable/btn_logout_selector</item>
+    </style>
+
     <style name="Coder.TextView.Orange">
         <item name="android:textColor">@color/dialog_color_title</item>
     </style>
+
     <style name="Coder.TextView.Black">
         <item name="android:textColor">@color/base_color_text_black</item>
     </style>
+
     <style name="Coder.TextView.White">
         <item name="android:textColor">@color/base_color_text_white</item>
     </style>
+
     <style name="Coder.TextView.Gray">
         <item name="android:textColor">@color/base_color_text_gray</item>
     </style>
@@ -82,11 +96,13 @@
     <style name="Coder.ImageView">
         <item name="android:contentDescription">@string/app_name</item>
     </style>
+
     <style name="Coder.ImageView.Photo_Large">
         <item name="android:layout_width">75dp</item>
         <item name="android:layout_height">75dp</item>
         <item name="android:scaleType">fitXY</item>
     </style>
+
     <style name="Coder.ImageView.Photo_Middle">
         <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">60dp</item>
@@ -128,6 +144,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:background">@drawable/chat_time_block</item>
     </style>
+
     <style name="chat_content_date_style">
         <item name="android:minHeight">50dp</item>
         <item name="android:gravity">left|center</item>
@@ -138,9 +155,17 @@
         <item name="android:focusable">true</item>
         <item name="android:background">#bfbfbf</item>
     </style>
+
     <style name="chat_text_name_style">
         <item name="android:textColor">#818181</item>
         <item name="android:textSize">15sp</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Animations"/>
+
+    <style name="Animations.GrowFromBottom">
+        <item name="@android:windowEnterAnimation">@anim/grow_from_bottom</item>
+        <item name="@android:windowExitAnimation">@anim/shrink_from_top</item>
     </style>
 </resources>

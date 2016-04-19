@@ -108,7 +108,6 @@ public class NewFriendAdapter extends BaseListAdapter<BmobInvitation> {
             });
         } catch (Exception e) {
             progressDialog.dismiss();
-            showToast("添加失败：" + e.getMessage());
         }
 
 

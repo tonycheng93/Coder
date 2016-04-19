@@ -29,7 +29,7 @@ public class EmoteAdapter extends BaseArrayListAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_face_text, null);
             holder = new ViewHolder();

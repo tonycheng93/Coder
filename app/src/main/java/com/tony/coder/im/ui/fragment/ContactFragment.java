@@ -30,7 +30,7 @@ import com.tony.coder.im.ui.activity.AddFriendActivity;
 import com.tony.coder.im.ui.activity.NearPeopleActivity;
 import com.tony.coder.im.ui.activity.NewFriendActivity;
 import com.tony.coder.im.ui.activity.SetMyInfoActivity;
-import com.tony.coder.im.ui.adapter.base.UserFriendAdapter;
+import com.tony.coder.im.ui.adapter.UserFriendAdapter;
 import com.tony.coder.im.util.CharacterParser;
 import com.tony.coder.im.util.CollectionUtils;
 import com.tony.coder.im.util.PinyinComparator;

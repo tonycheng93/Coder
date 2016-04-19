@@ -27,6 +27,7 @@ public class DialogTips extends DialogBase {
         super.setNamePositiveButton(buttonText);
         this.hasNegative = hasNegative;
         this.hasTitle = hasTitle;
+        super.setTitle(title);
     }
 
     /**
@@ -96,7 +97,7 @@ public class DialogTips extends DialogBase {
     }
 
     private int dip2px(Context context, float dipValue) {
-        float scale = context.getResources().getDisplayMetrics().densityDpi;
+        float scale = context.getResources().getDisplayMetrics().density;
         return (int) (scale * dipValue + 0.5f);
     }
 }

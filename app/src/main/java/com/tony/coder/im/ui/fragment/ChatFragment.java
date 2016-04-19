@@ -18,9 +18,6 @@ import com.tony.coder.im.ui.adapter.MessageRecentAdapter;
 import com.tony.coder.im.view.ClearEditText;
 import com.tony.coder.im.view.dialog.DialogTips;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.bmob.im.bean.BmobChatUser;
@@ -47,7 +44,6 @@ public class ChatFragment extends BaseFragment implements
     ListView mListView;
 
     private MessageRecentAdapter mAdapter;
-    private List<BmobRecent> mDatas = new ArrayList<>();
 
     @Nullable
     @Override
@@ -60,12 +56,12 @@ public class ChatFragment extends BaseFragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mDatas = BmobDB.create(getActivity()).queryRecents();
         initView();
     }
 
     private void initView() {
         initTopBarForOnlyTitle("会话");
+        mClearEditText.setFocusable(false);
         mListView.setOnItemClickListener(this);
         mListView.setOnItemLongClickListener(this);
         mAdapter = new MessageRecentAdapter(getActivity(), R.layout.item_conversation, BmobDB.create(getActivity()).queryRecents());

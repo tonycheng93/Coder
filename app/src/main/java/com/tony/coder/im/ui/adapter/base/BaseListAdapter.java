@@ -30,7 +30,7 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
     public Context mContext;
     public LayoutInflater mInflater;
 
-    public BaseListAdapter(List<E> list, Context context) {
+    public BaseListAdapter(Context context,List<E> list) {
         super();
         mList = list;
         mContext = context;

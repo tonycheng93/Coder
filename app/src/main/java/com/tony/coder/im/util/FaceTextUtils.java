@@ -1,10 +1,5 @@
 package com.tony.coder.im.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +9,11 @@ import android.text.TextUtils;
 import android.text.style.ImageSpan;
 
 import com.tony.coder.im.entity.FaceText;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 项目名称：Coder
@@ -26,7 +26,7 @@ import com.tony.coder.im.entity.FaceText;
  * 修改备注：
  */
 public class FaceTextUtils {
-    public static List<FaceText> faceTexts = new ArrayList<FaceText>();
+    public static List<FaceText> faceTexts = new ArrayList<>();
     static {
         faceTexts.add(new FaceText("\\ue056"));
         faceTexts.add(new FaceText("\\ue057"));
@@ -46,7 +46,7 @@ public class FaceTextUtils {
         faceTexts.add(new FaceText("\\ue408"));
         faceTexts.add(new FaceText("\\ue409"));
         faceTexts.add(new FaceText("\\ue40a"));
-        faceTexts.add(new FaceText("\\ue40b"));
+        faceTexts.add(new FaceText("\\\\ue40b"));
         faceTexts.add(new FaceText("\\ue40d"));
         faceTexts.add(new FaceText("\\ue40e"));
         faceTexts.add(new FaceText("\\ue40f"));

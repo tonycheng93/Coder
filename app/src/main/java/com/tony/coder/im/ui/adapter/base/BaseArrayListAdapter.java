@@ -45,7 +45,7 @@ public class BaseArrayListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mDatas.size() > 0 ? mDatas.size() : 0;
+        return mDatas.size();
     }
 
     @Override
