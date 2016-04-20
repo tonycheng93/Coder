@@ -10,10 +10,11 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tony.coder.R;
 import com.tony.coder.im.ui.adapter.base.ViewHolder;
 import com.tony.coder.im.util.FaceTextUtils;
-import com.tony.coder.im.util.ImageLoaderUtils;
+import com.tony.coder.im.util.ImageLoadOptions;
 import com.tony.coder.im.util.TimeUtil;
 
 import java.util.List;
@@ -61,7 +62,8 @@ public class MessageRecentAdapter extends ArrayAdapter<BmobRecent> implements Fi
         //填充数据
         String avatar = item.getAvatar();
         if (avatar != null && !avatar.equals("")) {
-            ImageLoaderUtils.display(mContext, iv_recent_avatar, avatar);
+            // TODO: 2016/4/20  ImageLoaderUtils.display(mContext, iv_recent_avatar, avatar);
+            ImageLoader.getInstance().displayImage(avatar,iv_recent_avatar, ImageLoadOptions.getOptions());
         } else {
             iv_recent_avatar.setImageResource(R.drawable.head);
         }

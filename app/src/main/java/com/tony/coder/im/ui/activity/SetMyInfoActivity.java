@@ -23,13 +23,14 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orhanobut.logger.Logger;
 import com.tony.coder.R;
 import com.tony.coder.im.CoderApplication;
 import com.tony.coder.im.config.Constants;
 import com.tony.coder.im.entity.User;
 import com.tony.coder.im.util.CollectionUtils;
-import com.tony.coder.im.util.ImageLoaderUtils;
+import com.tony.coder.im.util.ImageLoadOptions;
 import com.tony.coder.im.util.PhotoUtil;
 import com.tony.coder.im.view.dialog.DialogTips;
 
@@ -207,7 +208,8 @@ public class SetMyInfoActivity extends ActivityBase implements View.OnClickListe
      */
     private void refreshAvatar(String avatar) {
         if (avatar != null && !avatar.equals("")) {
-            ImageLoaderUtils.display(this, iv_set_avatar, avatar);
+            ImageLoader.getInstance().displayImage(avatar,iv_set_avatar, ImageLoadOptions.getOptions());
+//      todo      ImageLoaderUtils.display(this, iv_set_avatar, avatar);
         } else {
             iv_set_avatar.setImageResource(R.drawable.default_head);
         }

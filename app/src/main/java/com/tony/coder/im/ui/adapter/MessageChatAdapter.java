@@ -2,6 +2,7 @@ package com.tony.coder.im.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.text.SpannableString;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.tony.coder.R;
 import com.tony.coder.im.ui.activity.ImageBrowserActivity;
 import com.tony.coder.im.ui.activity.LocationActivity;
@@ -16,10 +24,12 @@ import com.tony.coder.im.ui.activity.SetMyInfoActivity;
 import com.tony.coder.im.ui.adapter.base.BaseListAdapter;
 import com.tony.coder.im.ui.adapter.base.ViewHolder;
 import com.tony.coder.im.util.FaceTextUtils;
-import com.tony.coder.im.util.ImageLoaderUtils;
+import com.tony.coder.im.util.ImageLoadOptions;
 import com.tony.coder.im.util.TimeUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import cn.bmob.im.BmobDownloadManager;
@@ -56,9 +66,25 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
 
     String currentObjectId = "";
 
+    private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
+
+    private DisplayImageOptions options;
+
     public MessageChatAdapter(Context context, List<BmobMsg> list) {
         super(context, list);
         currentObjectId = BmobUserManager.getInstance(context).getCurrentUserObjectId();
+
+        options = new DisplayImageOptions.Builder()
+                .showImageForEmptyUri(R.drawable.ic_launcher)
+                .showImageOnFail(R.drawable.ic_launcher)
+                .resetViewBeforeLoading(true)
+                .cacheOnDisc(true)
+                .cacheInMemory(true)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .considerExifParams(true)
+                .displayer(new FadeInBitmapDisplayer(300))
+                .build();
     }
 
     @Override
@@ -125,8 +151,9 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
         final TextView tv_voice_length = ViewHolder.getView(convertView, R.id.tv_voice_length);
         //点击头像进入个人资料
         String avatar = item.getBelongAvatar();
-        if (avatar != null && avatar.equals("")) {
-            ImageLoaderUtils.display(mContext, iv_avatar, avatar);
+        if (avatar != null && !avatar.equals("")) {//加载头像，为了不每次都加载头像
+            // TODO: 2016/4/20  ImageLoaderUtils.display(mContext, iv_avatar, avatar);
+            ImageLoader.getInstance().displayImage(avatar, iv_avatar, ImageLoadOptions.getOptions(), animateFirstListener);
         } else {
             iv_avatar.setImageResource(R.drawable.head);
         }
@@ -335,7 +362,7 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
      * @param iv_picture
      * @param item
      */
-    private void dealWithImage(int position, ProgressBar progress_load, ImageView iv_fail_resend,
+    private void dealWithImage(int position, final ProgressBar progress_load, ImageView iv_fail_resend,
                                TextView tv_send_status, ImageView iv_picture, BmobMsg item) {
         String text = item.getContent();
         if (getItemViewType(position) == TYPE_SEND_IMAGE) {//发送的消息
@@ -366,9 +393,47 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
                 showUrl = text;
             }
             //为了方便每次都是取本地的图片显示
-            ImageLoaderUtils.display(mContext, iv_picture, showUrl);
+            // TODO: 2016/4/20  ImageLoaderUtils.display(mContext, iv_picture, showUrl);
+            ImageLoader.getInstance().displayImage(showUrl, iv_picture);
         } else {
-            ImageLoaderUtils.display(mContext, iv_picture, text);
+            // TODO: 2016/4/20  ImageLoaderUtils.display(mContext, iv_picture, text);
+            ImageLoader.getInstance().displayImage(text, iv_picture, options, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+                    progress_load.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    progress_load.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    progress_load.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+                    progress_load.setVisibility(View.INVISIBLE);
+                }
+            });
+        }
+    }
+
+    private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
+        static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
+
+        @Override
+        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+            if (loadedImage != null) {
+                ImageView imageView = (ImageView) view;
+                boolean firstDisplay = !displayedImages.contains(imageUri);
+                if (firstDisplay) {
+                    FadeInBitmapDisplayer.animate(imageView, 500);
+                    displayedImages.add(imageUri);
+                }
+            }
         }
     }
 }

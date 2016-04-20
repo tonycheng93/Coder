@@ -2,7 +2,6 @@ package com.tony.coder.im.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -29,8 +28,8 @@ public class TabIndicatorView extends RelativeLayout {
     ImageView mTabIcon;
     @Bind(R.id.tab_indicator_hint)
     TextView mTabHint;
-
-    private LayoutInflater mInflater;
+    @Bind(R.id.iv_tips)
+    ImageView iv_tips;
 
     public TabIndicatorView(Context context) {
         this(context, null);
@@ -73,6 +72,14 @@ public class TabIndicatorView extends RelativeLayout {
             mTabHint.setTextColor(getResources().getColor(R.color.green));
         } else {
             mTabHint.setTextColor(getResources().getColor(R.color.grey));
+        }
+    }
+
+    public void setTipsVisibility(boolean isShowTips){
+        if (isShowTips){
+            iv_tips.setVisibility(VISIBLE);
+        }else {
+            iv_tips.setVisibility(GONE);
         }
     }
 }

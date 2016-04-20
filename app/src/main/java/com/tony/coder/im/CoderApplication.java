@@ -2,6 +2,7 @@ package com.tony.coder.im;
 
 import android.app.Application;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
@@ -10,10 +11,17 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.tony.coder.R;
 import com.tony.coder.im.util.CollectionUtils;
 import com.tony.coder.im.util.SharePreferenceUtil;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +64,8 @@ public class CoderApplication extends Application {
         mMediaPlayer = MediaPlayer.create(this, R.raw.notify);
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
+        initImageLoader(getApplicationContext());
+
         //若用户登陆过，则先从好友数据库中取出好友list
         if (BmobUserManager.getInstance(getApplicationContext())
                 .getCurrentUser() != null) {
@@ -63,6 +73,19 @@ public class CoderApplication extends Application {
             contactList = CollectionUtils.list2map(BmobDB.create(getApplicationContext()).getContactList());
         }
         initBaidu();
+    }
+
+    private void initImageLoader(Context context) {
+        File cacheDir = StorageUtils.getOwnCacheDirectory(context, "coder/Cache");//获取缓存的目录地址
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+                .threadPoolSize(3)//线程池内加载的数量
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())//将保存的时候的URI名称用MD5加密
+                .tasksProcessingOrder(QueueProcessingType.FIFO)
+                .diskCache(new UnlimitedDiskCache(cacheDir))//自定义缓存路径
+                .build();
+        ImageLoader.getInstance().init(config);
     }
 
     /**

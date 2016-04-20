@@ -8,10 +8,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tony.coder.R;
 import com.tony.coder.im.ui.adapter.base.BaseListAdapter;
 import com.tony.coder.im.ui.adapter.base.ViewHolder;
-import com.tony.coder.im.util.ImageLoaderUtils;
+import com.tony.coder.im.util.ImageLoadOptions;
 
 import java.util.List;
 
@@ -49,7 +50,8 @@ public class AddFriendAdapter extends BaseListAdapter<BmobChatUser> {
 
         String avatar = contract.getAvatar();
         if (avatar != null && !avatar.equals("")) {
-            ImageLoaderUtils.display(mContext, iv_avatar, avatar);
+//    todo        ImageLoaderUtils.display(mContext, iv_avatar, avatar);
+            ImageLoader.getInstance().displayImage(avatar, iv_avatar, ImageLoadOptions.getOptions());
         } else {
             iv_avatar.setImageResource(R.drawable.default_head);
         }

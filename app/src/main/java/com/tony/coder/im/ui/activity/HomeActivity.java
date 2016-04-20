@@ -1,11 +1,17 @@
 package com.tony.coder.im.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.tony.coder.R;
+import com.tony.coder.im.CoderApplication;
+import com.tony.coder.im.receiver.MessageReceiver;
 import com.tony.coder.im.ui.adapter.ViewPagerAdapter;
 import com.tony.coder.im.ui.fragment.ChatFragment;
 import com.tony.coder.im.ui.fragment.ContactFragment;
@@ -18,8 +24,16 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.bmob.im.BmobChat;
+import cn.bmob.im.BmobChatManager;
+import cn.bmob.im.BmobNotifyManager;
+import cn.bmob.im.bean.BmobInvitation;
+import cn.bmob.im.bean.BmobMsg;
+import cn.bmob.im.config.BmobConfig;
+import cn.bmob.im.db.BmobDB;
+import cn.bmob.im.inteface.EventListener;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends ActivityBase implements EventListener {
     @Bind(R.id.viewPager)
     ViewPager mViewPager;
     @Bind(R.id.tabLayout)
@@ -32,10 +46,26 @@ public class HomeActivity extends BaseActivity {
 
     private List<Fragment> mFragmentList = new ArrayList<>();
 
+    private int currentTabIndex;
+
+    ChatFragment chatFragment;
+    ContactFragment contactFragment;
+    DiscoverFragment discoverFragment;
+    MeFragment meFragment;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //开启定时检测服务（单位为秒）-在这里检测后台是否还有未读的消息，有的话就取出来
+        //如果你觉得检测服务比较耗流量和电量，你也可以去掉这句话-同时还有onDestory方法里面的stopPollService方法
+        BmobChat.getInstance(this).startPollService(20);
+        //开启广播接收器
+        initNewMessageBroadCast();
+        initTagMessageBroadCast();
+
 
         ButterKnife.bind(this);
 
@@ -66,10 +96,14 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initTab() {
-        mFragmentList.add(new ChatFragment());
-        mFragmentList.add(new ContactFragment());
-        mFragmentList.add(new DiscoverFragment());
-        mFragmentList.add(new MeFragment());
+        chatFragment = new ChatFragment();
+        contactFragment = new ContactFragment();
+        discoverFragment = new DiscoverFragment();
+        meFragment = new MeFragment();
+        mFragmentList.add(chatFragment);
+        mFragmentList.add(contactFragment);
+        mFragmentList.add(discoverFragment);
+        mFragmentList.add(meFragment);
 
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), mFragmentList);
         mViewPager.setAdapter(pagerAdapter);
@@ -80,6 +114,7 @@ public class HomeActivity extends BaseActivity {
         mTabLayout.getTabAt(2).setCustomView(mDiscoverIndicator);
         mTabLayout.getTabAt(3).setCustomView(mMeIndicator);
     }
+
 
     private void initListener() {
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -135,6 +170,7 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
+                currentTabIndex = position;
                 if (position == 0) {
                     mTabLayout.getTabAt(position).isSelected();
                 } else if (position == 1) {
@@ -151,5 +187,180 @@ public class HomeActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //小圆点提示
+        if (BmobDB.create(this).hasUnReadMsg()) {
+            mChatIndicator.setTipsVisibility(true);
+        } else {
+            mChatIndicator.setTipsVisibility(false);
+        }
+        if (BmobDB.create(this).hasNewInvite()) {
+            mContactIndicator.setTipsVisibility(true);
+        } else {
+            mContactIndicator.setTipsVisibility(false);
+        }
+
+        MessageReceiver.sEventListeners.add(this);//监听推送事件
+        //清空
+        MessageReceiver.mNewNum = 0;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MessageReceiver.sEventListeners.remove(this);//取消监听推送的消息
+    }
+
+    @Override
+    public void onMessage(BmobMsg message) {
+        refreshNewMsg(message);
+    }
+
+    /**
+     * 刷新界面
+     *
+     * @param message
+     */
+    private void refreshNewMsg(BmobMsg message) {
+        //声音提示
+        boolean isAllowVoice = CoderApplication.getInstance().getSpUtil().isAllowVoice();
+        if (isAllowVoice) {
+            CoderApplication.getInstance().getMediaPlayer().start();
+        }
+        mChatIndicator.setTipsVisibility(true);
+        //存储消息
+        if (message != null) {
+            BmobChatManager.getInstance(HomeActivity.this).saveReceiveMessage(true, message);
+        }
+        if (currentTabIndex == 0) {
+            //当前页面如果是会话页面，刷新此页面
+            chatFragment.refresh();
+        }
+    }
+
+    @Override
+    public void onReaded(String s, String s1) {
+
+    }
+
+    @Override
+    public void onNetChange(boolean isNetConnected) {
+        if (isNetConnected) {
+            showToast(R.string.network_tips);
+        }
+    }
+
+    @Override
+    public void onAddUser(BmobInvitation message) {
+        refreshInvite(message);
+    }
+
+    @Override
+    public void onOffline() {
+        showOfflineDialog(this);
+    }
+
+    NewBroadCastReceiver newReceiver;
+
+    private void initNewMessageBroadCast() {
+        //注册接收消息广播
+        newReceiver = new NewBroadCastReceiver();
+        IntentFilter filter = new IntentFilter(BmobConfig.BROADCAST_NEW_MESSAGE);
+        //优先级要低于ChatActivity
+        filter.setPriority(3);
+        registerReceiver(newReceiver, filter);
+    }
+
+    /**
+     * 新消息广播接收者
+     */
+    private class NewBroadCastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //刷新页面
+            refreshNewMsg(null);
+            //关闭广播
+            abortBroadcast();
+        }
+    }
+
+    TagBroadCastReceiver userReceiver;
+
+    private void initTagMessageBroadCast() {
+        //注册广播
+        userReceiver = new TagBroadCastReceiver();
+        IntentFilter filter = new IntentFilter(BmobConfig.BROADCAST_ADD_USER_MESSAGE);
+        //优先级要低于ChatActivity
+        filter.setPriority(3);
+        registerReceiver(userReceiver, filter);
+    }
+
+    /**
+     * 标签消息广播接收者
+     */
+    private class TagBroadCastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            BmobInvitation message = (BmobInvitation) intent.getSerializableExtra("invite");
+            refreshInvite(message);
+            //关闭广播
+            abortBroadcast();
+        }
+    }
+
+    private void refreshInvite(BmobInvitation message) {
+        boolean isAllowVoice = CoderApplication.getInstance().getSpUtil().isAllowVoice();
+        if (isAllowVoice) {
+            CoderApplication.getInstance().getMediaPlayer().start();
+        }
+        mContactIndicator.setTipsVisibility(true);
+        if (currentTabIndex == 1) {
+            if (contactFragment != null) {
+                contactFragment.refresh();
+            }
+        } else {
+            //同时提醒通知
+            String tickerText = message.getFromname() + "请求添加好友";
+            boolean isAllowVibrate = CoderApplication.getInstance().getSpUtil().isAllowVibrate();
+            BmobNotifyManager.getInstance(this).showNotify(isAllowVoice, isAllowVibrate,
+                    R.drawable.ic_launcher, tickerText, message.getFromname(), tickerText.toString(), NewFriendActivity.class);
+
+        }
+    }
+
+    private static long firstTime;
+
+    /**
+     * 连续按两次返回键就退出
+     */
+    @Override
+    public void onBackPressed() {
+        if (firstTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+        } else {
+            showToast("再按一次退出程序！");
+        }
+        firstTime = System.currentTimeMillis();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            unregisterReceiver(newReceiver);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            unregisterReceiver(userReceiver);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

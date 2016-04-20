@@ -26,7 +26,7 @@ import cn.bmob.im.util.BmobLog;
  * 修改时间：
  * 修改备注：
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
     public CoderApplication mApplication;
     public BmobChatManager mChatManager;
     public BmobUserManager mUserManager;

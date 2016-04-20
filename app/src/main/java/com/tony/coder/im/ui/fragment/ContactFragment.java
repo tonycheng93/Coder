@@ -218,7 +218,7 @@ public class ContactFragment extends BaseFragment implements
         }
     }
 
-    private void refresh() {
+    public void refresh() {
         try {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -285,10 +285,12 @@ public class ContactFragment extends BaseFragment implements
             filterDataList.clear();
             for (User sortModel : friends) {
                 String name = sortModel.getUsername();
-                if (name.indexOf(filterStr.toString()) != -1
-                        || mCharacterParser.getSelling(name).startsWith(
-                        filterStr.toLowerCase())) {
-                    filterDataList.add(sortModel);
+                if (name != null){
+                    if (name.indexOf(filterStr.toString()) != -1
+                            || mCharacterParser.getSelling(name).startsWith(
+                            filterStr.toString())) {
+                        filterDataList.add(sortModel);
+                    }
                 }
             }
         }

@@ -10,9 +10,10 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tony.coder.R;
 import com.tony.coder.im.entity.User;
-import com.tony.coder.im.util.ImageLoaderUtils;
+import com.tony.coder.im.util.ImageLoadOptions;
 
 import java.util.List;
 
@@ -83,7 +84,8 @@ public class UserFriendAdapter extends BaseAdapter implements SectionIndexer {
         String avatar = friend.getAvatar();
 
         if (TextUtils.isEmpty(avatar)) {
-            ImageLoaderUtils.display(mContext, holder.avatar, avatar);
+            // TODO: 2016/4/20  ImageLoaderUtils.display(mContext, holder.avatar, avatar);
+            ImageLoader.getInstance().displayImage(avatar, holder.avatar, ImageLoadOptions.getOptions());
         } else {
             holder.avatar.setImageDrawable(mContext.getResources().getDrawable(R.drawable.head));
         }

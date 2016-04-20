@@ -27,4 +27,18 @@
             android:textColor="@color/grey"
             android:textSize="12sp"/>
     </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/msg_tips"
+        android:contentDescription="@string/action_settings"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:visibility="invisible" />
 </RelativeLayout>
