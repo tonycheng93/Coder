@@ -23,9 +23,9 @@ import com.tony.coder.im.ui.activity.LocationActivity;
 import com.tony.coder.im.ui.activity.SetMyInfoActivity;
 import com.tony.coder.im.ui.adapter.base.BaseListAdapter;
 import com.tony.coder.im.ui.adapter.base.ViewHolder;
-import com.tony.coder.im.util.FaceTextUtils;
-import com.tony.coder.im.util.ImageLoadOptions;
-import com.tony.coder.im.util.TimeUtil;
+import com.tony.coder.im.utils.FaceTextUtils;
+import com.tony.coder.im.utils.ImageLoadOptions;
+import com.tony.coder.im.utils.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -136,8 +136,8 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
         }
         //文本类型
         ImageView iv_avatar = ViewHolder.getView(convertView, R.id.iv_avatar);
-        ImageView iv_fail_resend = ViewHolder.getView(convertView, R.id.iv_fail_resend);//失败重发
-        TextView tv_send_status = ViewHolder.getView(convertView, R.id.tv_send_status);//发送状态
+        final ImageView iv_fail_resend = ViewHolder.getView(convertView, R.id.iv_fail_resend);//失败重发
+        final TextView tv_send_status = ViewHolder.getView(convertView, R.id.tv_send_status);//发送状态
         TextView tv_time = ViewHolder.getView(convertView, R.id.tv_time);
         TextView tv_message = ViewHolder.getView(convertView, R.id.tv_message);
         //图片
@@ -177,7 +177,7 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
         tv_time.setText(TimeUtil.getChatTime(Long.parseLong(item.getMsgTime())));
 
         if (getItemViewType(position) == TYPE_SEND_TXT
-                || getItemViewType(position) == TYPE_SEND_IMAGE//图片单独处理
+//                || getItemViewType(position) == TYPE_SEND_IMAGE//图片单独处理
                 || getItemViewType(position) == TYPE_SEND_LOCATION
                 || getItemViewType(position) == TYPE_SEND_VOICE) {//只有自己发送的消息才有重发机制
             //状态描述
@@ -230,7 +230,7 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
                 break;
             case BmobConfig.TYPE_IMAGE://图片类
                 try {
-                    if (text != null && text.equals("")) {//发送成功之后存储的图片类型的content和接收到的是不一样的
+                    if (text != null && ! text.equals("")) {//发送成功之后存储的图片类型的content和接收到的是不一样的
                         dealWithImage(position, progress_load, iv_fail_resend, tv_send_status, iv_picture, item);
                     }
                     iv_picture.setOnClickListener(new View.OnClickListener() {
@@ -250,7 +250,7 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
                 break;
             case BmobConfig.TYPE_LOCATION://位置信息
                 try {
-                    if (text != null && text.equals("")) {
+                    if (text != null && ! text.equals("")) {
                         String address = text.split("&")[0];
                         final String latitude = text.split("&")[1];//纬度
                         final String longtitude = text.split("&")[2];//经度
