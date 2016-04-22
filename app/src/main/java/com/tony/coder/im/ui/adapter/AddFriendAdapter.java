@@ -12,7 +12,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tony.coder.R;
 import com.tony.coder.im.ui.adapter.base.BaseListAdapter;
 import com.tony.coder.im.ui.adapter.base.ViewHolder;
-import com.tony.coder.im.util.ImageLoadOptions;
+import com.tony.coder.im.utils.ImageLoadOptions;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import cn.bmob.v3.listener.PushListener;
 
 /**
  * 项目名称：Coder
- * 类描述：
+ * 类描述：查找好友
  * 创建人：tonycheng
  * 创建时间：2016/4/19 17:44
  * 邮箱：tonycheng93@outlook.com
@@ -44,7 +44,7 @@ public class AddFriendAdapter extends BaseListAdapter<BmobChatUser> {
 
         final BmobChatUser contract = getList().get(position);
         TextView name = ViewHolder.getView(convertView, R.id.name);
-        ImageView iv_avatar = ViewHolder.getView(convertView, R.id.iv_avatar);
+        ImageView iv_avatar = ViewHolder.getView(convertView, R.id.avatar);
 
         Button btn_add = ViewHolder.getView(convertView, R.id.btn_add);
 
