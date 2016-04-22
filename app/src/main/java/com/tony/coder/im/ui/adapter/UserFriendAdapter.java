@@ -13,13 +13,13 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tony.coder.R;
 import com.tony.coder.im.entity.User;
-import com.tony.coder.im.util.ImageLoadOptions;
+import com.tony.coder.im.utils.ImageLoadOptions;
 
 import java.util.List;
 
 /**
  * 项目名称：Coder
- * 类描述：
+ * 类描述：好友列表
  * 创建人：tonycheng
  * 创建时间：2016/4/15 11:48
  * 邮箱：tonycheng93@outlook.com
@@ -83,7 +83,7 @@ public class UserFriendAdapter extends BaseAdapter implements SectionIndexer {
         String name = friend.getUsername();
         String avatar = friend.getAvatar();
 
-        if (TextUtils.isEmpty(avatar)) {
+        if ( ! TextUtils.isEmpty(avatar)) {
             // TODO: 2016/4/20  ImageLoaderUtils.display(mContext, holder.avatar, avatar);
             ImageLoader.getInstance().displayImage(avatar, holder.avatar, ImageLoadOptions.getOptions());
         } else {
