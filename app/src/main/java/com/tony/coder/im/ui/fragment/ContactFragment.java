@@ -31,21 +31,19 @@ import com.tony.coder.im.ui.activity.NearPeopleActivity;
 import com.tony.coder.im.ui.activity.NewFriendActivity;
 import com.tony.coder.im.ui.activity.SetMyInfoActivity;
 import com.tony.coder.im.ui.adapter.UserFriendAdapter;
-import com.tony.coder.im.util.CharacterParser;
-import com.tony.coder.im.util.CollectionUtils;
-import com.tony.coder.im.util.PinyinComparator;
-import com.tony.coder.im.view.ClearEditText;
-import com.tony.coder.im.view.HeaderLayout;
-import com.tony.coder.im.view.LetterView;
-import com.tony.coder.im.view.dialog.DialogTips;
+import com.tony.coder.im.utils.CharacterParser;
+import com.tony.coder.im.utils.CollectionUtils;
+import com.tony.coder.im.utils.PinyinComparator;
+import com.tony.coder.im.widget.ClearEditText;
+import com.tony.coder.im.widget.LetterView;
+import com.tony.coder.im.widget.TitleBarBuilder;
+import com.tony.coder.im.widget.dialog.DialogTips;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.db.BmobDB;
 import cn.bmob.v3.listener.UpdateListener;
@@ -82,15 +80,12 @@ public class ContactFragment extends BaseFragment implements
      * 根据拼音来排列ListView里面的数据类
      */
     private PinyinComparator mPinyinComparator;
-    @Bind(R.id.iv_msg_tips)
-    ImageView iv_msg_tips;
 
-    TextView tv_new_name;
+    private ImageView iv_msg_tips;
 
-    @Bind(R.id.layout_new)
-    LinearLayout layout_new;//新朋友
-    @Bind(R.id.layout_near)
-    LinearLayout layout_near;//附近的人
+
+    private LinearLayout layout_new;//新朋友
+    private LinearLayout layout_near;//附近的人
 
     @Nullable
     @Override
@@ -104,19 +99,31 @@ public class ContactFragment extends BaseFragment implements
         super.onActivityCreated(savedInstanceState);
         mInputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         init();
-        Logger.d("TAG","onActivityCreated");
+        Logger.d("TAG", "onActivityCreated");
     }
 
     private void init() {
         mCharacterParser = CharacterParser.getInstance();
         mPinyinComparator = new PinyinComparator();
-        initTopBarForRight("联系人", R.drawable.base_action_bar_add_bg_selector, new
+      /*  initTopBarForRight("联系人", R.drawable.base_action_bar_add_bg_selector, new
                 HeaderLayout.onRightImageButtonClickListener() {
                     @Override
                     public void onClick() {
                         startAnimActivity(AddFriendActivity.class);
                     }
-                });
+                });*/
+
+        new TitleBarBuilder(getActivity())
+                .setTitleText("联系人")
+                .setRightImage(R.drawable.base_action_bar_add_bg_selector)
+                .setRightOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startAnimActivity(AddFriendActivity.class);
+                    }
+                })
+                .build();
+
         initListView();
         initRightLetterView();
         initEditText();
@@ -125,7 +132,10 @@ public class ContactFragment extends BaseFragment implements
     private void initListView() {
         list_friends = (ListView) findViewById(R.id.list_friends);
         RelativeLayout headView = (RelativeLayout) mInflater.inflate(R.layout.include_new_friend, null);
-        ButterKnife.bind(this, headView);
+
+        iv_msg_tips = (ImageView) headView.findViewById(R.id.iv_msg_tips);
+        layout_new = (LinearLayout) headView.findViewById(R.id.layout_new);
+        layout_near = (LinearLayout) headView.findViewById(R.id.layout_near);
 
         layout_new.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -256,13 +266,13 @@ public class ContactFragment extends BaseFragment implements
         mClearEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
-                filterData(s.toString());
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                // 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
+                filterData(s.toString());
             }
 
             @Override
@@ -285,7 +295,7 @@ public class ContactFragment extends BaseFragment implements
             filterDataList.clear();
             for (User sortModel : friends) {
                 String name = sortModel.getUsername();
-                if (name != null){
+                if (name != null) {
                     if (name.indexOf(filterStr.toString()) != -1
                             || mCharacterParser.getSelling(name).startsWith(
                             filterStr.toString())) {
