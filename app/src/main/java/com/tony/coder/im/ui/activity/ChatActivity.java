@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -429,7 +430,9 @@ public class ChatActivity extends ActivityBase implements View.OnClickListener
                         int start = edit_user_comment.getSelectionStart();
                         CharSequence content = edit_user_comment.getText()
                                 .insert(start, key);
-                        edit_user_comment.setText(content);
+                        //解决表情正则表达式无法解析问题，输入框中还是文本形式
+                        SpannableString spannableString = FaceTextUtils.toSpannableString(ChatActivity.this,content.toString());
+                        edit_user_comment.setText(spannableString);
                         // 定位光标位置
                         CharSequence info = edit_user_comment.getText();
                         if (info instanceof Spannable) {
