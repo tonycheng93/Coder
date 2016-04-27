@@ -9,8 +9,8 @@ import android.widget.AdapterView;
 import com.tony.coder.R;
 import com.tony.coder.im.entity.User;
 import com.tony.coder.im.ui.adapter.NearPeopleAdapter;
-import com.tony.coder.im.util.CollectionUtils;
-import com.tony.coder.im.view.xlist.XListView;
+import com.tony.coder.im.utils.CollectionUtils;
+import com.tony.coder.im.widget.xlist.XListView;
 
 import java.util.ArrayList;
 import java.util.List;

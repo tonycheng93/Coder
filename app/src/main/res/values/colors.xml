@@ -39,4 +39,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#9E9E9E</color>
     <color name="green">#388E3C</color>
+
+    <!--标题栏颜色-->
+    <color name="orange">#ff8200</color>
+    <color name="orange_alpha">#66ff8200</color>
+    <color name="orange_dark">#d46303</color>
+
+    <color name="txt_black">#232323</color>
+    <color name="txt_gray">#565656</color>
+    <color name="txt_light_gray">#898989</color>
 </resources>

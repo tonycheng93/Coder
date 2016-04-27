@@ -10,8 +10,8 @@ import android.widget.EditText;
 
 import com.tony.coder.R;
 import com.tony.coder.im.ui.adapter.AddFriendAdapter;
-import com.tony.coder.im.util.CollectionUtils;
-import com.tony.coder.im.view.xlist.XListView;
+import com.tony.coder.im.utils.CollectionUtils;
+import com.tony.coder.im.widget.xlist.XListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import cn.bmob.v3.listener.FindListener;
 
 /**
  * 项目名称：Coder
- * 类描述：
+ * 类描述：查找好友
  * 创建人：tonycheng
  * 创建时间：2016/4/15 14:38
  * 邮箱：tonycheng93@outlook.com
@@ -73,6 +73,7 @@ public class AddFriendActivity extends ActivityBase implements View.OnClickListe
         mListView.PullRefreshing();
 
         mAdapter = new AddFriendAdapter(this, users);
+        mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
     }
 

@@ -29,7 +29,7 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.tony.coder.R;
-import com.tony.coder.im.view.HeaderLayout;
+import com.tony.coder.im.widget.HeaderLayout;
 
 import cn.bmob.im.util.BmobLog;
 
@@ -48,7 +48,6 @@ public class LocationActivity extends BaseActivity implements OnGetGeoCoderResul
     //定位相关
     LocationClient mLocationClient;
     public LocationListener mListener = new LocationListener();
-    BitmapDescriptor mCurrentMarker;
 
     MapView mMapView;
     BaiduMap mBaiduMap;
@@ -117,7 +116,7 @@ public class LocationActivity extends BaseActivity implements OnGetGeoCoderResul
         mLocationClient = new LocationClient(this);
         mLocationClient.registerLocationListener(mListener);
         LocationClientOption option = new LocationClientOption();
-        option.setProdName("coder");//设置产品线
+        option.setProdName("coderim");//设置产品线
         option.setOpenGps(true);
         option.setCoorType("bd09ll");
         option.setScanSpan(1000);
@@ -160,7 +159,7 @@ public class LocationActivity extends BaseActivity implements OnGetGeoCoderResul
 
     @Override
     public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
-        if (result == null && result.error != SearchResult.ERRORNO.NO_ERROR) {
+        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
             showToast("抱歉，未能找到结果");
             return;
         }
@@ -176,7 +175,7 @@ public class LocationActivity extends BaseActivity implements OnGetGeoCoderResul
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             //map view 销毁后不在处理新接收的位置
-            if (bdLocation == null && mMapView == null) {
+            if (bdLocation == null || mMapView == null) {
                 return;
             }
             if (lastLocation != null) {

@@ -13,7 +13,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.tony.coder.R;
 import com.tony.coder.im.CoderApplication;
-import com.tony.coder.im.config.Config;
+import com.tony.coder.im.common.Config;
 
 import cn.bmob.im.BmobChat;
 

@@ -24,7 +24,6 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="@dimen/margin_chat_top"
-            android:background="@drawable/head"
             android:contentDescription="@string/add_avator"
             android:scaleType="fitXY" />
 

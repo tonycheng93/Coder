@@ -8,7 +8,7 @@ import android.widget.ListView;
 
 import com.tony.coder.R;
 import com.tony.coder.im.ui.adapter.NewFriendAdapter;
-import com.tony.coder.im.view.dialog.DialogTips;
+import com.tony.coder.im.widget.dialog.DialogTips;
 
 import cn.bmob.im.bean.BmobInvitation;
 import cn.bmob.im.db.BmobDB;

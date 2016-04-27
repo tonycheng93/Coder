@@ -43,6 +43,7 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
 
     public void setList(List<E> list) {
         mList = list;
+        notifyDataSetChanged();
     }
 
     public void add(E e) {
@@ -78,6 +79,8 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = bindView(position, convertView, parent);
+        //绑定内部点击监听
+        addInternalClickListener(convertView,position,mList.get(position));
         return convertView;
     }
 
@@ -86,7 +89,7 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
     // adapter中的内部点击事件
     public Map<Integer, onInternalClickListener> canClickItem;
 
-    private void addInternalClickListener(final View itemView, final int position, final Object valuesMap) {
+    private void addInternalClickListener(final View itemView, final Integer position, final Object valuesMap) {
         if (canClickItem != null) {
             for (Integer key : canClickItem.keySet()) {
                 View inView = itemView.findViewById(key);
@@ -117,7 +120,7 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
     Toast mToast;
 
     public void showToast(final String text) {
-        if (TextUtils.isEmpty(text)) {
+        if ( ! TextUtils.isEmpty(text)) {
             ((Activity) mContext).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

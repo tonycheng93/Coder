@@ -12,7 +12,7 @@ import com.tony.coder.im.CoderApplication;
 import com.tony.coder.im.entity.User;
 import com.tony.coder.im.ui.adapter.base.BaseListAdapter;
 import com.tony.coder.im.ui.adapter.base.ViewHolder;
-import com.tony.coder.im.util.ImageLoadOptions;
+import com.tony.coder.im.utils.ImageLoadOptions;
 
 import java.util.List;
 

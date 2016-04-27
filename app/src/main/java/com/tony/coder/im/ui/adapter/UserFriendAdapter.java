@@ -39,7 +39,7 @@ public class UserFriendAdapter extends BaseAdapter implements SectionIndexer {
     /**
      * 当ListView数据发生变化时，调用此方法来更新ListView
      *
-     * @param list
+     * @param list user 列表
      */
     public void updateListView(List<User> list) {
         this.data = list;
@@ -68,7 +68,7 @@ public class UserFriendAdapter extends BaseAdapter implements SectionIndexer {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_user_friend, null);
             holder = new ViewHolder();

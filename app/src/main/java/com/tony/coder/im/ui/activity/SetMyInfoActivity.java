@@ -27,12 +27,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orhanobut.logger.Logger;
 import com.tony.coder.R;
 import com.tony.coder.im.CoderApplication;
-import com.tony.coder.im.config.Constants;
+import com.tony.coder.im.common.Constants;
 import com.tony.coder.im.entity.User;
-import com.tony.coder.im.util.CollectionUtils;
-import com.tony.coder.im.util.ImageLoadOptions;
-import com.tony.coder.im.util.PhotoUtil;
-import com.tony.coder.im.view.dialog.DialogTips;
+import com.tony.coder.im.utils.CollectionUtils;
+import com.tony.coder.im.utils.ImageLoadOptions;
+import com.tony.coder.im.utils.PhotoUtil;
+import com.tony.coder.im.widget.dialog.DialogTips;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -95,7 +95,6 @@ public class SetMyInfoActivity extends ActivityBase implements View.OnClickListe
     String username = "";
     User user;
 
-    Bitmap newBitmap;
     boolean isFromCamera = false;//区分拍照旋转
     int degree = 0;
 
@@ -104,8 +103,8 @@ public class SetMyInfoActivity extends ActivityBase implements View.OnClickListe
         super.onCreate(savedInstanceState);
         // 因为魅族手机下面有三个虚拟的导航按钮，需要将其隐藏掉，
         // 不然会遮掉拍照和相册两个按钮，且在setContentView之前调用才能生效
-        int currenttapiVersion = Build.VERSION.SDK_INT;
-        if (currenttapiVersion >= 14) {
+        int currentapiVersion = Build.VERSION.SDK_INT;
+        if (currentapiVersion >= 14) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
         setContentView(R.layout.activity_set_info);
@@ -140,7 +139,7 @@ public class SetMyInfoActivity extends ActivityBase implements View.OnClickListe
             btn_chat.setVisibility(View.VISIBLE);
             btn_chat.setOnClickListener(this);
             if (from.equals("add")) {// 从附近的人列表添加好友--因为获取附近的人的方法里面有是否显示好友的情况，因此在这里需要判断下这个用户是否是自己的好友
-                if (CoderApplication.getInstance().getContactList().containsKey(username)) {//是好友
+                if (mCoderApplication.getContactList().containsKey(username)) {//是好友
                     btn_back.setVisibility(View.VISIBLE);
                     btn_back.setOnClickListener(this);
                 } else {
@@ -162,7 +161,7 @@ public class SetMyInfoActivity extends ActivityBase implements View.OnClickListe
         initOtherData(user.getUsername());
     }
 
-    private void initOtherData(final String username) {
+    private void initOtherData(String username) {
         mUserManager.queryUser(username, new FindListener<User>() {
             @Override
             public void onSuccess(List<User> list) {
@@ -324,7 +323,7 @@ public class SetMyInfoActivity extends ActivityBase implements View.OnClickListe
     }
 
     private void updateUserData(User mUser, UpdateListener listener) {
-        User current = mUserManager.getCurrentUser(User.class);
+        User current = (User) mUserManager.getCurrentUser(User.class);
         mUser.setObjectId(current.getObjectId());
         mUser.update(this, listener);
     }
@@ -399,7 +398,7 @@ public class SetMyInfoActivity extends ActivityBase implements View.OnClickListe
         layout_choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("点击相册");
+                showLog("点击相册");
                 layout_photo.setBackgroundColor(getResources().getColor(R.color.base_color_text_white));
                 layout_choose.setBackgroundDrawable(getResources().getDrawable(R.drawable.pop_bg_press));
                 Intent intent = new Intent(Intent.ACTION_PICK, null);
@@ -482,10 +481,10 @@ public class SetMyInfoActivity extends ActivityBase implements View.OnClickListe
                     avatorPop.dismiss();
                 }
                 Uri uri = null;
-                if (data != null) {
+                if (data == null) {
                     return;
                 }
-                if (requestCode == RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                         showToast("SD卡不可用");
                         return;
@@ -501,7 +500,7 @@ public class SetMyInfoActivity extends ActivityBase implements View.OnClickListe
                 if (avatorPop != null) {
                     avatorPop.dismiss();
                 }
-                if (data != null) {
+                if (data == null) {
                     return;
                 } else {
                     saveCropAvator(data);
@@ -539,6 +538,7 @@ public class SetMyInfoActivity extends ActivityBase implements View.OnClickListe
         User u = new User();
         u.setAvatar(url);
         updateUserData(u, new UpdateListener() {
+
             @Override
             public void onSuccess() {
                 showToast("头像更新成功！");
@@ -566,13 +566,13 @@ public class SetMyInfoActivity extends ActivityBase implements View.OnClickListe
             Bitmap bitmap = extras.getParcelable("data");
             Logger.d("Coder", "avatar - bitmap" + bitmap);
             if (bitmap != null) {
-                bitmap = PhotoUtil.toRoundCorner(bitmap, 10);
+//                bitmap = PhotoUtil.toRoundBitmap(bitmap);
                 if (isFromCamera && degree != 0) {
                     bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
                 }
                 iv_set_avatar.setImageBitmap(bitmap);
                 //保存图片
-                String fileName = new SimpleDateFormat("yyMMddHHmmss").format(new Date() + ".png");
+                String fileName = new SimpleDateFormat("yyMMddHHmmss").format(new Date()) + ".png";
                 path = Constants.MyAvatarDir + fileName;
                 PhotoUtil.saveBitmap(Constants.MyAvatarDir, fileName, bitmap, true);
                 //上传头像

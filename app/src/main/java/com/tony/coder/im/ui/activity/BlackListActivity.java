@@ -9,9 +9,9 @@ import android.widget.ListView;
 import com.tony.coder.R;
 import com.tony.coder.im.CoderApplication;
 import com.tony.coder.im.ui.adapter.BlackListAdapter;
-import com.tony.coder.im.util.CollectionUtils;
-import com.tony.coder.im.view.HeaderLayout;
-import com.tony.coder.im.view.dialog.DialogTips;
+import com.tony.coder.im.utils.CollectionUtils;
+import com.tony.coder.im.widget.HeaderLayout;
+import com.tony.coder.im.widget.dialog.DialogTips;
 
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.db.BmobDB;

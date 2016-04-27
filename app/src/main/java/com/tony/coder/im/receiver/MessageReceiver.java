@@ -9,8 +9,8 @@ import com.tony.coder.R;
 import com.tony.coder.im.CoderApplication;
 import com.tony.coder.im.ui.activity.HomeActivity;
 import com.tony.coder.im.ui.activity.NewFriendActivity;
-import com.tony.coder.im.util.CollectionUtils;
-import com.tony.coder.im.util.CommonUtils;
+import com.tony.coder.im.utils.CollectionUtils;
+import com.tony.coder.im.utils.CommonUtils;
 
 import org.json.JSONObject;
 

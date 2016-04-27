@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager;
 
 import com.tony.coder.R;
 import com.tony.coder.im.ui.adapter.ImageBrowserAdapter;
-import com.tony.coder.im.view.CustomViewPager;
+import com.tony.coder.im.widget.CustomViewPager;
 
 import java.util.ArrayList;
 

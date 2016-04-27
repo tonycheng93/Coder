@@ -13,9 +13,9 @@ import com.orhanobut.logger.Logger;
 import com.tony.coder.R;
 import com.tony.coder.im.CoderApplication;
 import com.tony.coder.im.entity.User;
-import com.tony.coder.im.util.CollectionUtils;
-import com.tony.coder.im.view.HeaderLayout;
-import com.tony.coder.im.view.dialog.DialogTips;
+import com.tony.coder.im.utils.CollectionUtils;
+import com.tony.coder.im.widget.HeaderLayout;
+import com.tony.coder.im.widget.dialog.DialogTips;
 
 import java.util.List;
 
@@ -99,7 +99,7 @@ public class BaseActivity extends FragmentActivity {
      * @param msg
      */
     public void showLog(String msg) {
-        Logger.d("life", msg);
+        Logger.d("Coder", msg);
     }
 
     /**

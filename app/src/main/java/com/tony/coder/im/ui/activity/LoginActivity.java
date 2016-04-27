@@ -13,9 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.tony.coder.R;
-import com.tony.coder.im.config.Constants;
+import com.tony.coder.im.common.Constants;
 import com.tony.coder.im.entity.User;
-import com.tony.coder.im.util.CommonUtils;
+import com.tony.coder.im.utils.CommonUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

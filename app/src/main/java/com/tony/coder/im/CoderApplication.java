@@ -18,8 +18,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.tony.coder.R;
-import com.tony.coder.im.util.CollectionUtils;
-import com.tony.coder.im.util.SharePreferenceUtil;
+import com.tony.coder.im.utils.CollectionUtils;
+import com.tony.coder.im.utils.SharePreferenceUtil;
 
 import java.io.File;
 import java.util.HashMap;
@@ -76,7 +76,7 @@ public class CoderApplication extends Application {
     }
 
     private void initImageLoader(Context context) {
-        File cacheDir = StorageUtils.getOwnCacheDirectory(context, "coder/Cache");//获取缓存的目录地址
+        File cacheDir = StorageUtils.getOwnCacheDirectory(context, "coderim/Cache");//获取缓存的目录地址
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
                 .threadPoolSize(3)//线程池内加载的数量
                 .threadPriority(Thread.NORM_PRIORITY - 2)

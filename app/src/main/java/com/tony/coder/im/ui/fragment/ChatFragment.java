@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +16,12 @@ import android.widget.ListView;
 import com.tony.coder.R;
 import com.tony.coder.im.ui.activity.ChatActivity;
 import com.tony.coder.im.ui.adapter.MessageRecentAdapter;
-import com.tony.coder.im.view.ClearEditText;
-import com.tony.coder.im.view.dialog.DialogTips;
+import com.tony.coder.im.utils.CharacterParser;
+import com.tony.coder.im.widget.ClearEditText;
+import com.tony.coder.im.widget.dialog.DialogTips;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,6 +50,7 @@ public class ChatFragment extends BaseFragment implements
 
     private MessageRecentAdapter mAdapter;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,17 +63,10 @@ public class ChatFragment extends BaseFragment implements
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
+        initEditText();
     }
 
-    private void initView() {
-        initTopBarForOnlyTitle("会话");
-        mClearEditText.setFocusable(false);
-        mListView.setOnItemClickListener(this);
-        mListView.setOnItemLongClickListener(this);
-        mAdapter = new MessageRecentAdapter(getActivity(), R.layout.item_conversation, BmobDB.create(getActivity()).queryRecents());
-        mListView.setAdapter(mAdapter);
-
-
+    private void initEditText() {
         mClearEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -76,7 +75,7 @@ public class ChatFragment extends BaseFragment implements
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mAdapter.getFilter().filter(charSequence);
+                filterData(charSequence.toString());
             }
 
             @Override
@@ -84,6 +83,40 @@ public class ChatFragment extends BaseFragment implements
 
             }
         });
+    }
+
+    private void initView() {
+        initTopBarForOnlyTitle("会话");
+        mListView.setOnItemClickListener(this);
+        mListView.setOnItemLongClickListener(this);
+        mAdapter = new MessageRecentAdapter(getActivity(), R.layout.item_conversation, BmobDB.create(getActivity()).queryRecents());
+        mListView.setAdapter(mAdapter);
+    }
+
+    /**
+     * 搜索过滤
+     *
+     * @param filterStr
+     */
+    private void filterData(String filterStr) {
+        List<BmobRecent> filterDataList = new ArrayList<>();
+        if (TextUtils.isEmpty(filterStr)) {
+            filterDataList = BmobDB.create(getActivity()).queryRecents();
+        } else {
+            filterDataList.clear();
+            for (BmobRecent user : BmobDB.create(getActivity()).queryRecents()) {
+                String name = user.getUserName();
+                if (name != null) {
+                    if (name.indexOf(filterStr.toString()) != -1 ||
+                            new CharacterParser().getSelling(name).startsWith(filterStr.toString())) {
+                        filterDataList.add(user);
+                    }
+                }
+            }
+        }
+        mAdapter.clear();
+        mAdapter.addAll(filterDataList);
+        mAdapter.notifyDataSetChanged();
     }
 
     /**

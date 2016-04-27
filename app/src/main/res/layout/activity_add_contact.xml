@@ -39,7 +39,7 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <com.tony.coder.im.view.xlist.XListView
+    <com.tony.coder.im.widget.xlist.XListView
         android:id="@+id/list_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

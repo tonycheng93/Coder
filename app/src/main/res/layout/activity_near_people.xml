@@ -15,7 +15,7 @@
         android:layout_weight="1.0"
         android:background="@color/msg_chat_bg" >
 
-        <com.tony.coder.im.view.xlist.XListView
+        <com.tony.coder.im.widget.xlist.XListView
             android:id="@+id/list_near"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

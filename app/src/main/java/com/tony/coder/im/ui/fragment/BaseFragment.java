@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.tony.coder.R;
 import com.tony.coder.im.CoderApplication;
-import com.tony.coder.im.view.HeaderLayout;
+import com.tony.coder.im.widget.HeaderLayout;
 
 import cn.bmob.im.BmobChatManager;
 import cn.bmob.im.BmobUserManager;

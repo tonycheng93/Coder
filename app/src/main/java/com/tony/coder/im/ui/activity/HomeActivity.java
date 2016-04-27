@@ -17,7 +17,7 @@ import com.tony.coder.im.ui.fragment.ChatFragment;
 import com.tony.coder.im.ui.fragment.ContactFragment;
 import com.tony.coder.im.ui.fragment.DiscoverFragment;
 import com.tony.coder.im.ui.fragment.MeFragment;
-import com.tony.coder.im.view.TabIndicatorView;
+import com.tony.coder.im.widget.TabIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -238,7 +238,9 @@ public class HomeActivity extends ActivityBase implements EventListener {
         }
         if (currentTabIndex == 0) {
             //当前页面如果是会话页面，刷新此页面
-            chatFragment.refresh();
+            if (chatFragment != null){
+                chatFragment.refresh();
+            }
         }
     }
 

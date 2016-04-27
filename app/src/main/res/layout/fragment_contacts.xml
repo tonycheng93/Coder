@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <include
-        android:id="@+id/common_actionbar"
-        layout="@layout/include_action_bar" />
+    <!-- <include
+         android:id="@+id/common_actionbar"
+         layout="@layout/include_action_bar" />-->
+    <include layout="@layout/include_titlebar"/>
 
     <RelativeLayout
         android:id="@+id/layout_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/base_bg"
-        android:orientation="vertical" >
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
 
-        <com.tony.coder.im.view.ClearEditText
+        <com.tony.coder.im.widget.ClearEditText
             android:id="@+id/et_msg_search"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_action_bar_height"
             android:layout_alignParentTop="true"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:background="@drawable/base_edit_input"
             android:drawableLeft="@drawable/icon_msg_search"
             android:drawablePadding="10dp"
             android:hint="@string/message_search_hint"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:singleLine="true" />
+            android:singleLine="true"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -38,14 +41,14 @@
             android:layout_below="@id/et_msg_search"
             android:layout_gravity="top"
             android:background="@drawable/user_add_top_bg"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <ListView
                 android:id="@+id/list_friends"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:cacheColorHint="#00000000"
-                android:scrollbars="none" />
+                android:scrollbars="none"/>
 
             <TextView
                 android:id="@+id/dialog"
@@ -58,15 +61,15 @@
                 android:padding="5dip"
                 android:textColor="@color/base_actionbar_bg"
                 android:textSize="35.0dip"
-                android:visibility="invisible" />
+                android:visibility="invisible"/>
         </RelativeLayout>
 
-        <com.tony.coder.im.view.LetterView
+        <com.tony.coder.im.widget.LetterView
             android:id="@+id/right_letter"
             android:layout_width="25dip"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:background="@color/transparent" />
+            android:background="@color/transparent"/>
     </RelativeLayout>
 
 </LinearLayout>

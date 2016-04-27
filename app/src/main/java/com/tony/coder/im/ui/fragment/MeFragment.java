@@ -16,7 +16,7 @@ import com.tony.coder.im.CoderApplication;
 import com.tony.coder.im.ui.activity.BlackListActivity;
 import com.tony.coder.im.ui.activity.LoginActivity;
 import com.tony.coder.im.ui.activity.SetMyInfoActivity;
-import com.tony.coder.im.util.SharePreferenceUtil;
+import com.tony.coder.im.utils.SharePreferenceUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

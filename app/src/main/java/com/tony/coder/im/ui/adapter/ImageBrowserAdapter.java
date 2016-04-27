@@ -12,7 +12,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.tony.coder.R;
-import com.tony.coder.im.util.ImageLoadOptions;
+import com.tony.coder.im.utils.ImageLoadOptions;
 
 import java.util.List;
 

@@ -30,10 +30,8 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE">
     </uses-permission>
-    <!--
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION">
-    </uses-permission>
-    -->
+<!--    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION">
+    </uses-permission>-->
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
     <uses-permission android:name="android.permission.WAKE_LOCK">
     </uses-permission>
@@ -79,7 +77,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".im.ui.activity.HomeActivity">
+        <activity android:name=".im.ui.activity.HomeActivity"
+                  android:launchMode="singleTask"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            >
         </activity>
         <activity android:name=".im.ui.activity.LoginActivity">
         </activity>

@@ -25,7 +25,6 @@
             android:layout_alignParentTop="true"
             android:contentDescription="@string/add_avator"
             android:layout_marginLeft="@dimen/margin_chat_top"
-            android:background="@drawable/head"
             android:scaleType="fitXY" />
 
         <ImageView

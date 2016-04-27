@@ -6,16 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tony.coder.R;
 import com.tony.coder.im.ui.adapter.base.ViewHolder;
-import com.tony.coder.im.util.FaceTextUtils;
-import com.tony.coder.im.util.ImageLoadOptions;
-import com.tony.coder.im.util.TimeUtil;
+import com.tony.coder.im.utils.FaceTextUtils;
+import com.tony.coder.im.utils.ImageLoadOptions;
+import com.tony.coder.im.utils.TimeUtil;
 
 import java.util.List;
 
@@ -33,12 +32,11 @@ import cn.bmob.im.db.BmobDB;
  * 修改时间：
  * 修改备注：
  */
-public class MessageRecentAdapter extends ArrayAdapter<BmobRecent> implements Filterable {
+public class MessageRecentAdapter extends ArrayAdapter<BmobRecent>{
 
     private LayoutInflater mInflater;
     private List<BmobRecent> mData;
     private Context mContext;
-
 
     public MessageRecentAdapter(Context context, int textViewResourceId, List<BmobRecent> objects) {
         super(context, textViewResourceId, objects);
@@ -63,7 +61,7 @@ public class MessageRecentAdapter extends ArrayAdapter<BmobRecent> implements Fi
         String avatar = item.getAvatar();
         if (avatar != null && !avatar.equals("")) {
             // TODO: 2016/4/20  ImageLoaderUtils.display(mContext, iv_recent_avatar, avatar);
-            ImageLoader.getInstance().displayImage(avatar,iv_recent_avatar, ImageLoadOptions.getOptions());
+            ImageLoader.getInstance().displayImage(avatar, iv_recent_avatar, ImageLoadOptions.getOptions());
         } else {
             iv_recent_avatar.setImageResource(R.drawable.head);
         }
