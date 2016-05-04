@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.tony.coder.R;
 import com.tony.coder.im.CoderApplication;
@@ -17,7 +15,6 @@ import com.tony.coder.im.db.base.DatabaseUtil;
 import com.tony.coder.im.entity.DynamicWall.DynamicWall;
 import com.tony.coder.im.sns.UserHelper;
 import com.tony.coder.im.ui.activity.CommentActivity;
-import com.tony.coder.im.ui.activity.NewDynamicWallActivity;
 import com.tony.coder.im.ui.adapter.DiscoverAdapter;
 import com.tony.coder.im.utils.CollectionUtils;
 import com.tony.coder.im.widget.xlist.XListView;
@@ -26,7 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import cn.bmob.im.task.BRequest;
 import cn.bmob.im.util.BmobLog;
@@ -37,7 +33,7 @@ import cn.bmob.v3.listener.FindListener;
 
 /**
  * 项目名称：Coder
- * 类描述：
+ * 类描述：社区动态fragment
  * 创建人：tonycheng
  * 创建时间：2016/3/31 21:06
  * 邮箱：tonycheng93@outlook.com
@@ -45,24 +41,21 @@ import cn.bmob.v3.listener.FindListener;
  * 修改时间：
  * 修改备注：
  */
-public class DiscoverFragment extends BaseFragment implements XListView.IXListViewListener, AdapterView.OnItemClickListener {
-
+public class DiscoverFragment extends BaseFragment implements XListView.IXListViewListener,
+        AdapterView.OnItemClickListener {
     private static final String DISCOVER_LIST = "discover_list_";
     private BmobQuery<DynamicWall> mQuery;
     private ArrayList<DynamicWall> mListItems;
     private DiscoverAdapter mAdapter;
     private XListView mListView;
-    private TextView networkTips;
+//    private TextView networkTips;
     private int mPageNum;
-    private ImageView mAdd;
-
-    public void setListView(XListView listView) {
-        mListView = listView;
-    }
+//    private ImageView mAdd;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
+    Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_discover, container, false);
     }
 
@@ -71,22 +64,19 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
         super.onActivityCreated(savedInstanceState);
         findView();
         initView();
-
-        List<Map<String, String>> list = new ArrayList<>();
     }
 
     private void initView() {
         mListItems = new ArrayList<>();
         mPageNum = 0;
         if (CoderApplication.getInstance().getCache().getAsObject(DISCOVER_LIST) != null) {
-            mListItems = (ArrayList<DynamicWall>) CoderApplication.getInstance().getCache().getAsObject(DISCOVER_LIST);
-            networkTips.setVisibility(View.GONE);
+            mListItems = (ArrayList<DynamicWall>) CoderApplication.getInstance().getCache()
+                    .getAsObject(DISCOVER_LIST);
+//            networkTips.setVisibility(View.GONE);
         }
-
         mQuery = new BmobQuery<>();
         mQuery.order("-createdAt");
         mQuery.setLimit(BRequest.QUERY_LIMIT_COUNT);
-
         mQuery.include("author");
         initTopBarForOnlyTitle("动态");
         initXListView();
@@ -95,22 +85,20 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
 
     private void bindEvent() {
         mListView.setOnItemClickListener(this);
-        mAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startAnimActivity(NewDynamicWallActivity.class);
-            }
-        });
+//        mAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startAnimActivity(NewDynamicWallActivity.class);
+//            }
+//        });
     }
 
     private void initXListView() {
         mListView.setPullLoadEnable(false);
         mListView.setPullRefreshEnable(true);
         mListView.setXListViewListener(this);
-
         mAdapter = new DiscoverAdapter(getActivity(), mListItems);
         mListView.setAdapter(mAdapter);
-
         initDiscoverList(false);
     }
 
@@ -120,15 +108,16 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
         mQuery.findObjects(getActivity(), new FindListener<DynamicWall>() {
             @Override
             public void onSuccess(List<DynamicWall> list) {
-                networkTips.setVisibility(View.INVISIBLE);
+//                networkTips.setVisibility(View.INVISIBLE);
                 if (CollectionUtils.isNotNull(list)) {
                     if (isUpdate || mPageNum == 0) {
                         mListItems.clear();
                         mAdapter.setList(mListItems);
                     }
-                    if (UserHelper.getCurrentUser() != null) {
+                    if (UserHelper.getCurrentUser() != null){
                         list = DatabaseUtil.getInstance(getActivity()).setFav(list);
                     }
+
                     mListItems.addAll(list);
                     mAdapter.setList(mListItems);
                     if (list.size() < BRequest.QUERY_LIMIT_COUNT) {
@@ -164,14 +153,14 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
     private void refreshPull() {
         if (mListView.getPullRefreshing()) {
             mListView.stopRefresh();
-            networkTips.setVisibility(View.INVISIBLE);
+//            networkTips.setVisibility(View.INVISIBLE);
         }
     }
 
     private void findView() {
         mListView = (XListView) findViewById(R.id.pull_refresh_list);
-        networkTips = (TextView) findViewById(R.id.fragment_networktips);
-        mAdd = (ImageView) findViewById(R.id.add_photo);
+//        networkTips = (TextView) findViewById(R.id.fragment_networktips);
+//        mAdd = (ImageView) findViewById(R.id.add_photo);
     }
 
     @Override
@@ -228,7 +217,7 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
     private void refreshLoad() {
         if (mListView.getPullLoading()) {
             mListView.stopLoadMore();
-            networkTips.setVisibility(View.INVISIBLE);
+//            networkTips.setVisibility(View.INVISIBLE);
         }
     }
 

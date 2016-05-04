@@ -26,13 +26,18 @@ import com.tony.coder.R;
  */
 public class XListView extends ListView implements AbsListView.OnScrollListener {
 
+    private final static int SCROLLBACK_HEADER = 0;
+    private final static int SCROLLBACK_FOOTER = 1;
+    private final static int SCROLL_DURATION = 400; // scroll back duration
+    private final static int PULL_LOAD_MORE_DELTA = 50; // when pull up >= 50px
+    // at bottom, trigger
+    // load more.
+    private final static float OFFSET_RADIO = 1.8f; // support iOS like pull
     private float mLastY = -1; // save event y
     private Scroller mScroller; // used for scroll back
     private OnScrollListener mScrollListener; // user's scroll listener
-
     // the interface to trigger refresh and load more.
     private IXListViewListener mListViewListener;
-
     // -- header view
     private XListViewHeader mHeaderView;
     // header view content, use it to calculate the Header's height. And hide it
@@ -41,28 +46,20 @@ public class XListView extends ListView implements AbsListView.OnScrollListener 
     private int mHeaderViewHeight; // header view's height
     private boolean mEnablePullRefresh = true;
     private boolean mPullRefreshing = false; // is refreashing.
-
     // -- footer view
     private XListViewFooter mFooterView = null;
     private boolean mEnablePullLoad = false;
     private boolean mPullLoading = false;
-
     // total list items, used to detect is at the bottom of listview.
     private int mTotalItemCount;
-
     // for mScroller, scroll back from header or footer.
     private int mScrollBack;
-    private final static int SCROLLBACK_HEADER = 0;
-    private final static int SCROLLBACK_FOOTER = 1;
-
-    private final static int SCROLL_DURATION = 400; // scroll back duration
-    private final static int PULL_LOAD_MORE_DELTA = 50; // when pull up >= 50px
-    // at bottom, trigger
-    // load more.
-    private final static float OFFSET_RADIO = 1.8f; // support iOS like pull
     // feature.
     private Context m_context;
 
+    /**
+     * @param context
+     */
     public XListView(Context context) {
         super(context);
         initWithContext(context);
@@ -73,8 +70,8 @@ public class XListView extends ListView implements AbsListView.OnScrollListener 
         initWithContext(context);
     }
 
-    public XListView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public XListView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
         initWithContext(context);
     }
 
@@ -85,19 +82,21 @@ public class XListView extends ListView implements AbsListView.OnScrollListener 
         super.setOnScrollListener(this);
 
         m_context = context;
-        //init header view
+        // init header view
         mHeaderView = new XListViewHeader(context);
-        mHeaderViewContent = (RelativeLayout) mHeaderView.findViewById(R.id.xlistview_header_content);
+        mHeaderViewContent = (RelativeLayout) mHeaderView
+                .findViewById(R.id.xlistview_header_content);
         addHeaderView(mHeaderView);
 
-        //init header height
-        mHeaderView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                mHeaderViewHeight = mHeaderViewContent.getHeight();
-                getViewTreeObserver().removeGlobalOnLayoutListener(this);
-            }
-        });
+        // init header height
+        mHeaderView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        mHeaderViewHeight = mHeaderViewContent.getHeight();
+                        getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    }
+                });
     }
 
     public boolean getPullLoading() {
@@ -118,29 +117,35 @@ public class XListView extends ListView implements AbsListView.OnScrollListener 
     }
 
     /**
-     * enable or disable pull down refresh feature
+     * enable or disable pull down refresh feature.
      *
      * @param enable
      */
     public void setPullRefreshEnable(boolean enable) {
         mEnablePullRefresh = enable;
-        if (!mEnablePullRefresh) {//disable,hide the content
-            mHeaderViewContent.setVisibility(INVISIBLE);
+        if (!mEnablePullRefresh) { // disable, hide the content
+            mHeaderViewContent.setVisibility(View.INVISIBLE);
         } else {
-            mHeaderViewContent.setVisibility(VISIBLE);
+            mHeaderViewContent.setVisibility(View.VISIBLE);
         }
     }
 
-    public void setPullLoadEnable(boolean enablePullLoad) {
-        if (mEnablePullLoad = enablePullLoad) {
+    /**
+     * enable or disable pull up load more feature.
+     *
+     * @param enable
+     */
+    public void setPullLoadEnable(boolean enable) {
+        if (mEnablePullLoad == enable)
             return;
-        }
-        mEnablePullLoad = enablePullLoad;
+
+        mEnablePullLoad = enable;
         if (!mEnablePullLoad) {
             if (mFooterView != null) {
                 this.removeFooterView(mFooterView);
             }
         } else {
+            //mPullLoading = false;
             if (mFooterView == null) {
                 mFooterView = new XListViewFooter(m_context);
                 mFooterView.setOnClickListener(new OnClickListener() {
@@ -156,6 +161,9 @@ public class XListView extends ListView implements AbsListView.OnScrollListener 
         }
     }
 
+    /**
+     * stop refresh, reset header view.
+     */
     public void stopRefresh() {
         Time time = new Time();
         time.setToNow();
@@ -167,7 +175,7 @@ public class XListView extends ListView implements AbsListView.OnScrollListener 
     }
 
     /**
-     * stop load more,reset footer view
+     * stop load more, reset footer view.
      */
     public void stopLoadMore() {
         if (mPullLoading == true) {
@@ -176,44 +184,47 @@ public class XListView extends ListView implements AbsListView.OnScrollListener 
         }
     }
 
-    public void invokeOnScrolling() {
+    private void invokeOnScrolling() {
         if (mScrollListener instanceof OnXScrollListener) {
-            OnXScrollListener listener = (OnXScrollListener) mScrollListener;
-            listener.onXScrolling(this);
+            OnXScrollListener l = (OnXScrollListener) mScrollListener;
+            l.onXScrolling(this);
         }
     }
 
-    public void updateHeaderHeight(float delta) {
-        mHeaderView.setVisiableHeight((int) delta + mHeaderView.getVisiableHeight());
-        if (mEnablePullRefresh && !mPullRefreshing) {//未处于刷新状态，更新箭头
+    private void updateHeaderHeight(float delta) {
+        mHeaderView.setVisiableHeight((int) delta
+                + mHeaderView.getVisiableHeight());
+        if (mEnablePullRefresh && !mPullRefreshing) { // 未处于刷新状态，更新箭头
             if (mHeaderView.getVisiableHeight() > mHeaderViewHeight) {
                 mHeaderView.setState(XListViewHeader.STATE_READY);
             } else {
                 mHeaderView.setState(XListViewHeader.STATE_NORMAL);
             }
         }
-        setSelection(0);//scroll to top each time
+        setSelection(0); // scroll to top each time
     }
 
     /**
-     * reset header view's height
+     * reset header view's height.
      */
     private void resetHeaderHeight() {
         int height = mHeaderView.getVisiableHeight();
-        if (height == 0)//not visible
+        if (height == 0) // not visible.
             return;
-        //refreshing and header isn't shown fully.do nothing
+        // refreshing and header isn't shown fully. do nothing.
         if (mPullRefreshing && height <= mHeaderViewHeight) {
             return;
         }
-        int finalHeight = 0;//default:scroll back to dismiss header.
-        //is refreshing,just scroll back to show all the header
+        int finalHeight = 0; // default: scroll back to dismiss header.
+        // is refreshing, just scroll back to show all the header.
         if (mPullRefreshing && height > mHeaderViewHeight) {
             finalHeight = mHeaderViewHeight;
         }
+
         mScrollBack = SCROLLBACK_HEADER;
-        mScroller.startScroll(0, height, 0, finalHeight - height, SCROLL_DURATION);
-        //trigger computeScroll
+        mScroller.startScroll(0, height, 0, finalHeight - height,
+                SCROLL_DURATION);
+        // trigger computeScroll
         invalidate();
     }
 
@@ -255,6 +266,7 @@ public class XListView extends ListView implements AbsListView.OnScrollListener 
         if (mLastY == -1) {
             mLastY = ev.getRawY();
         }
+
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mLastY = ev.getRawY();
@@ -274,10 +286,11 @@ public class XListView extends ListView implements AbsListView.OnScrollListener 
                 }
                 break;
             default:
-                mLastY = -1;//reset
+                mLastY = -1; // reset
                 if (getFirstVisiblePosition() == 0) {
-                    //invoke refresh
-                    if (mEnablePullRefresh && mHeaderView.getVisiableHeight() > mHeaderViewHeight) {
+                    // invoke refresh
+                    if (mEnablePullRefresh
+                            && mHeaderView.getVisiableHeight() > mHeaderViewHeight) {
                         mPullRefreshing = true;
                         mHeaderView.setState(XListViewHeader.STATE_REFRESHING);
                         if (mListViewListener != null) {
@@ -286,7 +299,7 @@ public class XListView extends ListView implements AbsListView.OnScrollListener 
                     }
                     resetHeaderHeight();
                 } else if (getLastVisiblePosition() == mTotalItemCount - 1) {
-                    //invoke load more
+                    // invoke load more.
                     if (mEnablePullLoad) {
                         if (mFooterView.getBottomMargin() > PULL_LOAD_MORE_DELTA) {
                             startLoadMore();
@@ -326,16 +339,19 @@ public class XListView extends ListView implements AbsListView.OnScrollListener 
     }
 
     @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        //send to user's listener
+    public void onScroll(AbsListView view, int firstVisibleItem,
+                         int visibleItemCount, int totalItemCount) {
+        // send to user's listener
+
         mTotalItemCount = totalItemCount;
         if (mScrollListener != null) {
-            mScrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+            mScrollListener.onScroll(view, firstVisibleItem, visibleItemCount,
+                    totalItemCount);
         }
     }
 
-    public void setXListViewListener(IXListViewListener listener) {
-        mListViewListener = listener;
+    public void setXListViewListener(IXListViewListener l) {
+        mListViewListener = l;
     }
 
     /**
@@ -343,15 +359,15 @@ public class XListView extends ListView implements AbsListView.OnScrollListener 
      * onXScrolling when header/footer scroll back.
      */
     public interface OnXScrollListener extends OnScrollListener {
-        void onXScrolling(View view);
+        public void onXScrolling(View view);
     }
 
     /**
      * implements this interface to get refresh/load more event.
      */
     public interface IXListViewListener {
-        void onRefresh();
+        public void onRefresh();
 
-        void onLoadMore();
+        public void onLoadMore();
     }
 }

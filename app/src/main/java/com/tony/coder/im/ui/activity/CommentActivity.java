@@ -35,7 +35,6 @@ import com.tony.coder.im.sns.tencent.TencentShareEntity;
 import com.tony.coder.im.ui.adapter.CommentAdapter;
 import com.tony.coder.im.utils.ActivityUtil;
 import com.tony.coder.im.utils.ImageLoadOptions;
-import com.tony.coder.im.widget.drop.CoverManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,9 +124,6 @@ public class CommentActivity extends ActivityBase implements View.OnClickListene
         onClickLoadMore();
         bindEvent();
 
-        CoverManager.getInstance().init(this);
-        CoverManager.getInstance().setMaxDragDistance(150);
-        CoverManager.getInstance().setExplosionTime(150);
         initMoodView(mDynamicWall);
     }
 

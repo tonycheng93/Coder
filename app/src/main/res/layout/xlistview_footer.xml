@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/xlistview_footer_hint_normal"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

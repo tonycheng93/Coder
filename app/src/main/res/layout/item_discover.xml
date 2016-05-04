@@ -24,15 +24,6 @@
         android:layout_alignBottom="@id/user_logo"
         android:layout_marginLeft="8dip"
         />
-    <com.tony.coder.im.widget.drop.WaterDrop
-        android:id="@+id/item_drop"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
-        android:visibility="gone"/>
     <ImageView
         android:id="@+id/item_action_fav"
         android:layout_width="wrap_content"
