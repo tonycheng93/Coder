@@ -13,6 +13,7 @@ import com.orhanobut.logger.Logger;
 import com.tony.coder.R;
 import com.tony.coder.im.CoderApplication;
 import com.tony.coder.im.entity.User;
+import com.tony.coder.im.sns.UserHelper;
 import com.tony.coder.im.utils.CollectionUtils;
 import com.tony.coder.im.widget.HeaderLayout;
 import com.tony.coder.im.widget.dialog.DialogTips;
@@ -37,11 +38,16 @@ import cn.bmob.v3.listener.UpdateListener;
  * 修改备注：
  */
 public class BaseActivity extends FragmentActivity {
+
+    public final String TAG = getClass().getName();
+
     BmobChatManager mChatManager;
     BmobUserManager mUserManager;
 
     CoderApplication mCoderApplication;
     protected HeaderLayout mHeaderLayout;
+
+    protected Context mContext;
 
     protected int mScreenWidth;
     protected int mScreenHeight;
@@ -53,6 +59,10 @@ public class BaseActivity extends FragmentActivity {
         mUserManager = BmobUserManager.getInstance(this);
         mChatManager = BmobChatManager.getInstance(this);
         mCoderApplication = CoderApplication.getInstance();
+
+        mContext = this;
+        mCoderApplication.addActivity(this);
+
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         mScreenWidth = metrics.widthPixels;
@@ -247,4 +257,9 @@ public class BaseActivity extends FragmentActivity {
             }
         }
     }
+
+    public User getCurrentUser() {
+        return UserHelper.getCurrentUser(mContext);
+    }
+
 }

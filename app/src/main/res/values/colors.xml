@@ -48,4 +48,7 @@
     <color name="txt_black">#232323</color>
     <color name="txt_gray">#565656</color>
     <color name="txt_light_gray">#898989</color>
+
+    <color name="theme_color">#D95555</color>
+    <color name="second_color">#888888</color>
 </resources>

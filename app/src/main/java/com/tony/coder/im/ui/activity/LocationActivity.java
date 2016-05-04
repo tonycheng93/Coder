@@ -252,7 +252,7 @@ public class LocationActivity extends BaseActivity implements OnGetGeoCoderResul
         }
         //关闭定位图层
         mBaiduMap.setMyLocationEnabled(false);
-        mMapView.onDestroy();
+//        mMapView.onDestroy();// TODO: 2016/4/29 这个地方会出现crash
         mMapView = null;
         //取消监听SDK广播
         unregisterReceiver(mReceiver);

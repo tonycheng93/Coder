@@ -34,7 +34,7 @@ public class TencentShareEntity {
      * @param imgUrl
      * @param targetUrl
      */
-    public TencentShareEntity(String title, String comment, String summary, String imgUrl, String targetUrl) {
+    public TencentShareEntity(String title, String imgUrl, String targetUrl, String summary, String comment) {
         this.title = title;
         this.comment = comment;
         this.summary = summary;

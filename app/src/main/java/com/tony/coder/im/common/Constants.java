@@ -23,6 +23,8 @@ public class Constants {
      */
 //    public static String MyAvatarDir = "/sdcard/coder/avatar/";
     public static String MyAvatarDir = Environment.getExternalStorageDirectory() + "/coder/avatar/";
+    public static String TRUE = "true";
+    public static String FALSE = "false";
     /**
      * 拍照回调
      */
@@ -34,6 +36,14 @@ public class Constants {
     public static final int REQUESTCODE_TAKE_LOCAL = 0x000002;//本地图片
     public static final int REQUESTCODE_TAKE_LOCATION = 0x000003;//位置
     public static final String EXTRA_STRING = "extra_string";
+
+    public static final String PRE_NAME = "coder_pre";
+
+    public static final int NUMBERS_PER_PAGE = 15;//每次请求返回评论条数
+    public static final int PUBLISH_COMMENT = 1;
+    public static final int SAVE_FAVOURITE = 2;
+    public static final int GET_FAVOURITE = 3;
+    public static final int GO_SETTINGS = 4;
 
 
     public static final String ACTION_REGISTER_SUCCESS_FINISH = "register.success.finish";//注册成功之后登陆页面退出

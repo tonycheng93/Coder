@@ -35,8 +35,8 @@ import com.tony.coder.im.utils.CharacterParser;
 import com.tony.coder.im.utils.CollectionUtils;
 import com.tony.coder.im.utils.PinyinComparator;
 import com.tony.coder.im.widget.ClearEditText;
+import com.tony.coder.im.widget.HeaderLayout;
 import com.tony.coder.im.widget.LetterView;
-import com.tony.coder.im.widget.TitleBarBuilder;
 import com.tony.coder.im.widget.dialog.DialogTips;
 
 import java.util.ArrayList;
@@ -105,15 +105,15 @@ public class ContactFragment extends BaseFragment implements
     private void init() {
         mCharacterParser = CharacterParser.getInstance();
         mPinyinComparator = new PinyinComparator();
-      /*  initTopBarForRight("联系人", R.drawable.base_action_bar_add_bg_selector, new
+        initTopBarForRight("联系人", R.drawable.base_action_bar_add_bg_selector, new
                 HeaderLayout.onRightImageButtonClickListener() {
                     @Override
                     public void onClick() {
                         startAnimActivity(AddFriendActivity.class);
                     }
-                });*/
+                });
 
-        new TitleBarBuilder(getActivity())
+      /*  new TitleBarBuilder(getActivity())
                 .setTitleText("联系人")
                 .setRightImage(R.drawable.base_action_bar_add_bg_selector)
                 .setRightOnClickListener(new View.OnClickListener() {
@@ -122,7 +122,7 @@ public class ContactFragment extends BaseFragment implements
                         startAnimActivity(AddFriendActivity.class);
                     }
                 })
-                .build();
+                .build();*/
 
         initListView();
         initRightLetterView();

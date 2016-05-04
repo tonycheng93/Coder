@@ -16,6 +16,7 @@ import com.tony.coder.im.CoderApplication;
 import com.tony.coder.im.common.Config;
 
 import cn.bmob.im.BmobChat;
+import cn.bmob.v3.Bmob;
 
 public class SplashActivity extends BaseActivity {
 
@@ -50,6 +51,7 @@ public class SplashActivity extends BaseActivity {
 
         BmobChat.DEBUG_MODE = true;
 
+        Bmob.initialize(this,Config.applicationId);
         BmobChat.getInstance(this).init(Config.applicationId);
 
         initLocClient();

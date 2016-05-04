@@ -30,8 +30,8 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE">
     </uses-permission>
-<!--    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION">
-    </uses-permission>-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION">
+        </uses-permission>-->
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
     <uses-permission android:name="android.permission.WAKE_LOCK">
     </uses-permission>
@@ -77,9 +77,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".im.ui.activity.HomeActivity"
-                  android:launchMode="singleTask"
-                  android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+        <activity
+            android:name=".im.ui.activity.HomeActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             >
         </activity>
         <activity android:name=".im.ui.activity.LoginActivity">
@@ -161,6 +162,30 @@
         <activity android:name=".im.ui.activity.NearPeopleActivity"/>
         <activity android:name=".im.ui.activity.ActivityBase"/>
         <activity android:name=".im.ui.activity.AddFriendActivity"/>
+        <activity android:name=".im.ui.activity.CommentActivity"/>
+        <activity android:name=".im.ui.activity.NewDynamicWallActivity"/>
+        <activity android:name=".im.ui.activity.PersonalActivity"/>
+
+        <!-- openqq start -->
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="KaOlDCXnNFPylqkw"/>
+            </intent-filter>
+        </activity>
+        <!-- openqq end -->
     </application>
 
 </manifest>

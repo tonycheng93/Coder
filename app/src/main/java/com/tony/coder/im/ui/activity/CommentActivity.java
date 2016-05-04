@@ -36,8 +36,6 @@ import com.tony.coder.im.ui.adapter.CommentAdapter;
 import com.tony.coder.im.utils.ActivityUtil;
 import com.tony.coder.im.utils.ImageLoadOptions;
 import com.tony.coder.im.widget.drop.CoverManager;
-import com.tony.coder.im.widget.drop.DropCover;
-import com.tony.coder.im.widget.drop.WaterDrop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,11 +75,9 @@ public class CommentActivity extends ActivityBase implements View.OnClickListene
     private TextView comment;
     private TextView share;
     private TextView love;
-    private TextView hate;
-    private WaterDrop mWaterDrop;
     private String commentEdit = "";
     private CommentAdapter mAdapter;
-    private List<Comment> comments = new ArrayList<Comment>();
+    private List<Comment> comments = new ArrayList<>();
     private int pageNum;
 
     @Override
@@ -108,7 +104,6 @@ public class CommentActivity extends ActivityBase implements View.OnClickListene
         comment = (TextView) findViewById(R.id.item_action_comment);
         share = (TextView) findViewById(R.id.item_action_share);
         love = (TextView) findViewById(R.id.item_action_love);
-
     }
 
     private void initView() {
@@ -137,7 +132,7 @@ public class CommentActivity extends ActivityBase implements View.OnClickListene
     }
 
     private void onClickLoadMore() {
-
+        fetchData();
     }
 
     private void bindEvent() {
@@ -213,7 +208,7 @@ public class CommentActivity extends ActivityBase implements View.OnClickListene
     }
 
     private TencentShareEntity getQQShareEntity(DynamicWall dynamicWall) {
-        String img = null;
+        String img ;
         if (dynamicWall.getContentfigureurl() != null) {
             img = dynamicWall.getContentfigureurl().getFileUrl(mContext);
         } else {
@@ -436,20 +431,6 @@ public class CommentActivity extends ActivityBase implements View.OnClickListene
         if (dynamicWall == null) {
             return;
         }
-        mWaterDrop.setText("new");
-        mWaterDrop.setTextSize(13);
-        if (Boolean.valueOf(CoderApplication.getInstance().getCache().getAsString(COMMENT_ID +
-                dynamicWall.getObjectId()))) {
-            mWaterDrop.setVisibility(View.GONE);
-        } else {
-            mWaterDrop.setVisibility(View.VISIBLE);
-        }
-        mWaterDrop.setOnDragCompeteListener(new DropCover.OnDragCompeteListener() {
-            @Override
-            public void onDrag() {
-                CoderApplication.getInstance().getCache().put(COMMENT_ID + mDynamicWall.getObjectId(), "true");
-            }
-        });
         userName.setText(mDynamicWall.getAuthor().getNick());
         commentItemContent.setText(mDynamicWall.getContent());
         if (mDynamicWall.getContentfigureurl() == null) {
@@ -536,7 +517,7 @@ public class CommentActivity extends ActivityBase implements View.OnClickListene
      */
     public void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter != null) {
+        if (listAdapter == null) {
             return;
         }
         int totalHeight = 0;

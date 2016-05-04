@@ -1,6 +1,7 @@
 package com.tony.coder.im.entity;
 
 import cn.bmob.im.bean.BmobChatUser;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.datatype.BmobRelation;
 
@@ -17,40 +18,19 @@ import cn.bmob.v3.datatype.BmobRelation;
 public class User extends BmobChatUser {
 
     private static final long serialVersionUID = 1L;
-    /**
-     * 发布的博客列表
-     */
-    private BmobRelation blogs;
-    /**
-     * //显示数据拼音的首字母
-     */
-    private String sortLetters;
-
-    /**
-     * //性别-true-男
-     */
-    private Boolean sex;
-
-    private Blog blog;
-
-    /**
-     * 地理坐标
-     */
-    private BmobGeoPoint location;//
-
+    private BmobRelation favorite;
+    private BmobFile avatarImg;
+    private String signature;
+    private String background;
+    private String sortLetters;//显示数据拼音的首字母
+    private Boolean sex;//性别-true-男
+    private BmobGeoPoint location;//地理坐标
     private Integer hight;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    public BmobRelation getBlogs() {
-        return blogs;
-    }
-
-    public void setBlogs(BmobRelation blogs) {
-        this.blogs = blogs;
-    }
 
     public String getSortLetters() {
         return sortLetters;
@@ -68,13 +48,6 @@ public class User extends BmobChatUser {
         this.sex = sex;
     }
 
-    public Blog getBlog() {
-        return blog;
-    }
-
-    public void setBlog(Blog blog) {
-        this.blog = blog;
-    }
 
     public BmobGeoPoint getLocation() {
         return location;
@@ -90,5 +63,37 @@ public class User extends BmobChatUser {
 
     public void setHight(Integer hight) {
         this.hight = hight;
+    }
+
+    public BmobRelation getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(BmobRelation favorite) {
+        this.favorite = favorite;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public BmobFile getAvatarImg() {
+        return avatarImg;
+    }
+
+    public void setAvatarImg(BmobFile avatarImg) {
+        this.avatarImg = avatarImg;
     }
 }

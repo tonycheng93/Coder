@@ -15,6 +15,7 @@ public interface TencentShareConstants {
     String TITLE = "乐聊，沟通无极限！";
     String IMG_URL = "";
     String TARGET_URL = "";
+    String WEB = "http://www.bmob.cn";
     String SUMMARY = "乐聊，有它就够了！";
     String COMMENT = "";
     String DEFAULT_IMG_URL = "";

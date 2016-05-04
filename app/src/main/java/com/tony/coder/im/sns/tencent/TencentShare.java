@@ -77,6 +77,13 @@ public class TencentShare implements TencentShareConstants {
     }
 
     /**
+     * 检查网络并开始分享
+     */
+    public void shareToQQ() {
+        shareToQQ(mShareEntity);
+    }
+
+    /**
      * 检查网络并开始分享,支持动态改变分享参数
      */
     private void shareToQQ(TencentShareEntity entity) {

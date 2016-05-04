@@ -1,5 +1,6 @@
 package com.tony.coder.im;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -18,6 +19,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.tony.coder.R;
+import com.tony.coder.im.entity.DynamicWall.DynamicWall;
+import com.tony.coder.im.io.ACache;
+import com.tony.coder.im.utils.ActivityManagerUtils;
 import com.tony.coder.im.utils.CollectionUtils;
 import com.tony.coder.im.utils.SharePreferenceUtil;
 
@@ -50,6 +54,12 @@ public class CoderApplication extends Application {
 
     public static BmobGeoPoint lastPoint = null;//上一次定位到经纬度
 
+    //社区相关
+    private DynamicWall currentDynamicWall;
+
+    //数据缓存相关
+    private ACache mACache;
+
 
     @Override
     public void onCreate() {
@@ -58,6 +68,30 @@ public class CoderApplication extends Application {
         BmobChat.DEBUG_MODE = true;
         mInstance = this;
         init();
+    }
+
+    public ACache getCache() {
+        if (mACache == null) {
+            return ACache.get(getApplicationContext());
+        } else {
+            return mACache;
+        }
+    }
+
+    public DynamicWall getCurrentDynamicWall() {
+        return currentDynamicWall;
+    }
+
+    public void setCurrentDynamicWall(DynamicWall currentDynamicWall) {
+        this.currentDynamicWall = currentDynamicWall;
+    }
+
+    public void addActivity(Activity activity) {
+        ActivityManagerUtils.getInstance().addActivity(activity);
+    }
+
+    public void exit() {
+        ActivityManagerUtils.getInstance().removeAllActivity();
     }
 
     private void init() {
@@ -249,5 +283,9 @@ public class CoderApplication extends Application {
         setContactList(null);
         setLatitude(null);
         setLongtitude(null);
+    }
+
+    public Activity getTopActivity() {
+        return ActivityManagerUtils.getInstance().getTopActivity();
     }
 }
