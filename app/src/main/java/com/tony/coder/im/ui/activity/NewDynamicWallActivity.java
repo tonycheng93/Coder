@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -78,7 +79,8 @@ public class NewDynamicWallActivity extends ActivityBase implements View.OnClick
     }
 
     private void initView() {
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE |
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams
+                .SOFT_INPUT_STATE_ALWAYS_VISIBLE |
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         initTopBarForBoth("发表动态", R.drawable.base_action_bar_true_bg_selector,
                 new HeaderLayout.onRightImageButtonClickListener() {
@@ -113,14 +115,20 @@ public class NewDynamicWallActivity extends ActivityBase implements View.OnClick
             case R.id.open_layout:
                 Date date = new Date(System.currentTimeMillis());
                 dateTime = date.getTime() + "";
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI, "image/*");
+                Intent intent;
+                if (Build.VERSION.SDK_INT < 19){
+                    intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI, "image/*");
+                }else {
+                    intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                }
                 startActivityForResult(intent, REQUEST_CODE_ALBUM);
                 break;
             case R.id.take_layout:
                 Date date1 = new Date(System.currentTimeMillis());
                 dateTime = date1.getTime() + "";
-                File file = new File(CacheUtils.getCacheDirectory(this, true, "pic") + dateTime);
+                File file = new File(CacheUtils.getCacheDirectory(mContext, true, "pic") +
+                        dateTime);
                 if (file.exists()) {
                     file.delete();
                 }
@@ -158,7 +166,7 @@ public class NewDynamicWallActivity extends ActivityBase implements View.OnClick
             @Override
             public void onFailure(int i, String s) {
                 Logger.e(TAG, "上传文件失败~" + s);
-                Log.d(TAG,"上传文件失败~" + s);//上传文件失败~BmobFile File does not exist.
+                Log.d(TAG, "上传文件失败~" + s);//上传文件失败~BmobFile File does not exist.
             }
         });
     }
@@ -217,7 +225,7 @@ public class NewDynamicWallActivity extends ActivityBase implements View.OnClick
                     }
                     break;
                 case REQUEST_CODE_CAMERA:
-                    String files = CacheUtils.getCacheDirectory(this, true, "pic") + dateTime;
+                    String files = CacheUtils.getCacheDirectory(mContext, true, "pic") + dateTime;
                     File file = new File(files);
                     if (file.exists()) {
                         Bitmap bitmap = compressImageFromFile(files);
@@ -232,10 +240,11 @@ public class NewDynamicWallActivity extends ActivityBase implements View.OnClick
         }
     }
 
+    // TODO: 2016/5/4 这个地方会导致bitmap为空 
     private Bitmap compressImageFromFile(String srcPath) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         newOpts.inJustDecodeBounds = true;//只读边,不读内容
-        Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+        BitmapFactory.decodeFile(srcPath, newOpts);
 
         newOpts.inJustDecodeBounds = false;
         int w = newOpts.outWidth;
@@ -256,18 +265,19 @@ public class NewDynamicWallActivity extends ActivityBase implements View.OnClick
         newOpts.inPurgeable = true;// 同时设置才会有效
         newOpts.inInputShareable = true;//。当系统内存不够时候图片自动被回收
 
-        bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+        Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
 //		return compressBmpFromBmp(bitmap);//原来的方法调用了这个方法企图进行二次压缩
         //其实是无效的,大家尽管尝试
         return bitmap;
     }
 
     public String saveToSdCard(Bitmap bitmap) {
-        String files = CacheUtils.getCacheDirectory(this, true, "pic") + dateTime + "_11.png";
+        String files = CacheUtils.getCacheDirectory(mContext, true, "pic") + dateTime + "_11.png";
         File file = new File(files);
         try {
             FileOutputStream out = new FileOutputStream(file);
-            if (bitmap.compress(Bitmap.CompressFormat.JPEG, 50, out)) {
+            if (bitmap.compress(Bitmap.CompressFormat.JPEG, 50, out)) {// TODO: 2016/5/4
+                // 这个地方会崩溃
                 out.flush();
                 out.close();
             }
