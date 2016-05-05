@@ -436,7 +436,7 @@ public class CommentActivity extends ActivityBase implements View.OnClickListene
             ImageLoader.getInstance().displayImage(
                     mDynamicWall.getContentfigureurl().getFileUrl(mContext) == null ? "" :
                             mDynamicWall.getContentfigureurl().getFileUrl(mContext), commentItemImage,
-                    ImageLoadOptions.getOptions(), new SimpleImageLoadingListener() {
+                    ImageLoadOptions.getOptions(R.drawable.bg_pic_loading), new SimpleImageLoadingListener() {
                         @Override
                         public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                             super.onLoadingComplete(imageUri, view, loadedImage);
