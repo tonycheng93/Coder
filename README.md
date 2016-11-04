@@ -14,7 +14,7 @@
 
 # 截图
 <img src="screenshots/2016-11-04-230257.png" width=30% height=50% /><img src="screenshots/2016-11-04-230236.png" width=30% height=50% /><img src="screenshots/2016-11-04-230655.png" width=30% height=50% />
-<img src="screenshots/2016-11-04-225812.png" width=30% height=50% /><img src="screenshots/2016-11-04-225654.png" width=30% height=50% /><img src="screenshots/2016-11-04-225520.png" width=30% height=50% /><img src="screenshots/2016-11-04-225947.png" width=30% height=50% />
+<img src="screenshots/2016-11-04-225812.png" width=30% height=50% /><img src="screenshots/2016-11-04-225654.png" width=30% height=50% /><img src="screenshots/2016-11-04-225520.png" width=30% height=50% /><img src="screenshots/2016-11-04-225947.png" width=30% height=50% /><img src="screenshots/2016-11-04-230614.png" width=30% height=50% /><img src="screenshots/2016-11-04-225833.png" width=30% height=50% />
 
 # 致谢
 
