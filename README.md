@@ -13,7 +13,7 @@
 
 
 # 截图
-<img src="2016-11-04-150804.png" width=30% height=60% />
+<img src="2016-11-04-150804.png" width=30% height=50% />
 
 # 致谢
 
@@ -23,14 +23,14 @@
 - Github:https://github.com/tonycheng93/
 
 # License
-```xml
+```
 Copyright (c) 2016 tonycheng93
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+    [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
