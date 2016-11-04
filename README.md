@@ -1,12 +1,12 @@
 # 乐聊
-一个支持即时通讯的Android应用。
+一个支持即时通讯的Android应用。这原本是自己的毕业设计，并以此拿到省优秀论文，现在已经毕业了，就把它开源了。消息的推送使用的是[Bmob后端云](http://www.bmob.cn/)，支持常见的消息类型的收发，并且在本地做了缓存处理，即使在没有网络的情况下，依然可以查看以往聊天消息历史纪录。加入了好友圈功能，支持纯文本、图片动态。（注：Bmob政策原因，现在免费用户上传文件API不能使用，因此，发送图片和语音功能受到限制）
 
 # 功能
 - 发送纯文本消息
 - 发送emoji表情
 - 发送地理位置
-- 发送图片（支持本地相册或者拍照）
-- 发送语音
+- ~~发送图片（支持本地相册或者拍照）~~
+- ~~发送语音~~
 - 支持搜索附近的人
 - 支持将好友加入黑名单
 - 支持好友圈发表动态
@@ -17,6 +17,7 @@
 <img src="screenshots/2016-11-04-225812.png" width=30% height=55% /><img src="screenshots/2016-11-04-225654.png" width=30% height=55% /><img src="screenshots/2016-11-04-225520.png" width=30% height=55% /><img src="screenshots/2016-11-04-225947.png" width=30% height=55% /><img src="screenshots/2016-11-04-230614.png" width=30% height=55% /><img src="screenshots/2016-11-04-225833.png" width=30% height=55% />
 
 # 致谢
+-	[Bmob后端云](http://www.bmob.cn/)
 
 # 关于我
 - 邮箱：tonycheng93@outlook.com
