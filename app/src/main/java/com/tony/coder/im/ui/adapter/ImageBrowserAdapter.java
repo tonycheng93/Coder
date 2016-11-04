@@ -57,7 +57,7 @@ public class ImageBrowserAdapter extends PagerAdapter {
         String imageUrl = mPhotos.get(position);
         //todo ImageLoaderUtils.display(mContext, photoView, imageUrl);
 
-        ImageLoader.getInstance().displayImage(imageUrl,photoView, ImageLoadOptions.getOptions(),
+        ImageLoader.getInstance().displayImage(imageUrl,photoView, ImageLoadOptions.getOptions(R.drawable.bg_pic_loading),
                 new SimpleImageLoadingListener(){
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {

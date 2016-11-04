@@ -115,8 +115,7 @@ public class DiscoverAdapter extends BaseListAdapter<DynamicWall> {
                 }
             });
         }
-
-        userName.setText(dynamicWall.getAuthor().getNick());
+        userName.setText(dynamicWall.getAuthor().getUsername());
         contentText.setText(dynamicWall.getContent());
 
         if (dynamicWall.getContentfigureurl() == null) {
@@ -125,7 +124,7 @@ public class DiscoverAdapter extends BaseListAdapter<DynamicWall> {
             contentImage.setVisibility(View.VISIBLE);
             ImageLoader.getInstance().displayImage(dynamicWall.getContentfigureurl().getFileUrl(mContext)
                             == null ? "" : dynamicWall.getContentfigureurl().getFileUrl(mContext),
-                    contentImage, ImageLoadOptions.getOptions(),
+                    contentImage, ImageLoadOptions.getOptions(R.drawable.bg_pic_loading),
                     new SimpleImageLoadingListener() {
                         @Override
                         public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {

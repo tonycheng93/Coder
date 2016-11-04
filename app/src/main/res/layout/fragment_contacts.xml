@@ -4,10 +4,10 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-     <include
+<!--     <include
          android:id="@+id/common_actionbar"
-         layout="@layout/include_action_bar" />
-   <!-- <include layout="@layout/include_titlebar"/>-->
+         layout="@layout/include_action_bar" />-->
+    <include layout="@layout/include_titlebar"/>
 
     <RelativeLayout
         android:id="@+id/layout_list"

@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.tony.coder.R;
 import com.tony.coder.im.CoderApplication;
@@ -15,6 +17,7 @@ import com.tony.coder.im.db.base.DatabaseUtil;
 import com.tony.coder.im.entity.DynamicWall.DynamicWall;
 import com.tony.coder.im.sns.UserHelper;
 import com.tony.coder.im.ui.activity.CommentActivity;
+import com.tony.coder.im.ui.activity.NewDynamicWallActivity;
 import com.tony.coder.im.ui.adapter.DiscoverAdapter;
 import com.tony.coder.im.utils.CollectionUtils;
 import com.tony.coder.im.widget.xlist.XListView;
@@ -48,9 +51,9 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
     private ArrayList<DynamicWall> mListItems;
     private DiscoverAdapter mAdapter;
     private XListView mListView;
-//    private TextView networkTips;
+    private TextView networkTips;
     private int mPageNum;
-//    private ImageView mAdd;
+    private ImageView mAdd;
 
     @Nullable
     @Override
@@ -72,7 +75,7 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
         if (CoderApplication.getInstance().getCache().getAsObject(DISCOVER_LIST) != null) {
             mListItems = (ArrayList<DynamicWall>) CoderApplication.getInstance().getCache()
                     .getAsObject(DISCOVER_LIST);
-//            networkTips.setVisibility(View.GONE);
+            networkTips.setVisibility(View.GONE);
         }
         mQuery = new BmobQuery<>();
         mQuery.order("-createdAt");
@@ -85,12 +88,12 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
 
     private void bindEvent() {
         mListView.setOnItemClickListener(this);
-//        mAdd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startAnimActivity(NewDynamicWallActivity.class);
-//            }
-//        });
+        mAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAnimActivity(NewDynamicWallActivity.class);
+            }
+        });
     }
 
     private void initXListView() {
@@ -108,7 +111,7 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
         mQuery.findObjects(getActivity(), new FindListener<DynamicWall>() {
             @Override
             public void onSuccess(List<DynamicWall> list) {
-//                networkTips.setVisibility(View.INVISIBLE);
+                networkTips.setVisibility(View.INVISIBLE);
                 if (CollectionUtils.isNotNull(list)) {
                     if (isUpdate || mPageNum == 0) {
                         mListItems.clear();
@@ -153,14 +156,14 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
     private void refreshPull() {
         if (mListView.getPullRefreshing()) {
             mListView.stopRefresh();
-//            networkTips.setVisibility(View.INVISIBLE);
+            networkTips.setVisibility(View.INVISIBLE);
         }
     }
 
     private void findView() {
         mListView = (XListView) findViewById(R.id.pull_refresh_list);
-//        networkTips = (TextView) findViewById(R.id.fragment_networktips);
-//        mAdd = (ImageView) findViewById(R.id.add_photo);
+        networkTips = (TextView) findViewById(R.id.fragment_networktips);
+        mAdd = (ImageView) findViewById(R.id.add_photo);
     }
 
     @Override
@@ -217,7 +220,7 @@ public class DiscoverFragment extends BaseFragment implements XListView.IXListVi
     private void refreshLoad() {
         if (mListView.getPullLoading()) {
             mListView.stopLoadMore();
-//            networkTips.setVisibility(View.INVISIBLE);
+            networkTips.setVisibility(View.INVISIBLE);
         }
     }
 

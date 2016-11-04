@@ -21,7 +21,7 @@
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true"/>
 
-  <!--  <TextView
+    <TextView
 
         android:id="@+id/fragment_networktips"
         android:layout_width="wrap_content"
@@ -40,5 +40,5 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
-        android:src="@drawable/discover_add_selector"/>-->
+        android:src="@drawable/discover_add_selector"/>
 </RelativeLayout>

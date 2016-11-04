@@ -28,4 +28,18 @@ public class ImageLoadOptions {
                 .build();
         return options;
     }
+
+    public static DisplayImageOptions getOptions(int drawableId) {
+        return new DisplayImageOptions.Builder()
+                .showImageOnLoading(drawableId)
+                .showImageForEmptyUri(drawableId)
+                .showImageOnFail(drawableId)
+                .resetViewBeforeLoading(true)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .considerExifParams(true)
+                .build();
+    }
 }

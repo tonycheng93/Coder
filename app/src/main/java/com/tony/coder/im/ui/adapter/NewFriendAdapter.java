@@ -60,7 +60,7 @@ public class NewFriendAdapter extends BaseListAdapter<BmobInvitation> {
             // TODO: 2016/4/20  ImageLoaderUtils.display(mContext, iv_avatar, avatar);
             ImageLoader.getInstance().displayImage(avatar,iv_avatar, ImageLoadOptions.getOptions());
         } else {
-            iv_avatar.setImageResource(R.drawable.default_head);
+            iv_avatar.setImageResource(R.drawable.head);
         }
 
         int status = msg.getStatus();

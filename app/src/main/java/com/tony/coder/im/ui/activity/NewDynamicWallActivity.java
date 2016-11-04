@@ -116,11 +116,12 @@ public class NewDynamicWallActivity extends ActivityBase implements View.OnClick
                 Date date = new Date(System.currentTimeMillis());
                 dateTime = date.getTime() + "";
                 Intent intent;
-                if (Build.VERSION.SDK_INT < 19){
+                if (Build.VERSION.SDK_INT < 19) {
                     intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI, "image/*");
-                }else {
-                    intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                } else {
+                    intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images
+                            .Media.EXTERNAL_CONTENT_URI);
                 }
                 startActivityForResult(intent, REQUEST_CODE_ALBUM);
                 break;
@@ -142,6 +143,7 @@ public class NewDynamicWallActivity extends ActivityBase implements View.OnClick
 
                 Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 camera.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
                 startActivityForResult(camera, REQUEST_CODE_CAMERA);
                 break;
             default:

@@ -91,7 +91,7 @@ public class HomeActivity extends ActivityBase implements EventListener {
         mDiscoverIndicator.setTabHint(R.string.home_tab_discover);
 
         mMeIndicator = new TabIndicatorView(this);
-        mMeIndicator.setTabIcon(R.drawable.tab_icon_me_normal);
+        mMeIndicator.setTabIcon(R.drawable.tab_icon_setting_normal);
         mMeIndicator.setTabHint(R.string.home_tab_me);
     }
 
@@ -133,7 +133,7 @@ public class HomeActivity extends ActivityBase implements EventListener {
                     mDiscoverIndicator.setTabHintColor(true);
                     mViewPager.setCurrentItem(2);
                 } else if (tab == mTabLayout.getTabAt(3)) {
-                    mMeIndicator.setTabIcon(R.drawable.tab_icon_me_focus);
+                    mMeIndicator.setTabIcon(R.drawable.tab_icon_setting_focus);
                     mMeIndicator.setTabHintColor(true);
                     mViewPager.setCurrentItem(3);
                 }
@@ -151,7 +151,7 @@ public class HomeActivity extends ActivityBase implements EventListener {
                     mDiscoverIndicator.setTabIcon(R.drawable.tab_icon_discover_normal);
                     mDiscoverIndicator.setTabHintColor(false);
                 } else if (tab == mTabLayout.getTabAt(3)) {
-                    mMeIndicator.setTabIcon(R.drawable.tab_icon_me_normal);
+                    mMeIndicator.setTabIcon(R.drawable.tab_icon_setting_normal);
                     mMeIndicator.setTabHintColor(false);
                 }
             }

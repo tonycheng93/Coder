@@ -47,6 +47,9 @@ public class CacheUtils {
                 .equals(Environment.getExternalStorageState()) && hasExternalStoragePermission(context)) {
             appCacheDir = getExternalCacheDir(context, dirName);
         }
+        if (appCacheDir == null){
+            appCacheDir = context.getCacheDir();
+        }
         if (appCacheDir == null) {
             String cacheDirPath = "/data/data/" + context.getPackageName() + "/cache/";
             Logger.d("Can't define system cache directory! '%s' will be used.", cacheDirPath);
