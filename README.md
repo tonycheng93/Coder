@@ -27,11 +27,11 @@
 <img src="screenshots/2016-11-04-230257.png" width=30% height=55% /><img src="screenshots/2016-11-04-230236.png" width=30% height=55% /><img src="screenshots/2016-11-04-230655.png" width=30% height=55% />
 <img src="screenshots/2016-11-04-225812.png" width=30% height=55% /><img src="screenshots/2016-11-04-225654.png" width=30% height=55% /><img src="screenshots/2016-11-04-225520.png" width=30% height=55% /><img src="screenshots/2016-11-04-225947.png" width=30% height=55% /><img src="screenshots/2016-11-04-230614.png" width=30% height=55% /><img src="screenshots/2016-11-04-225833.png" width=30% height=55% />
 # 依赖库
-- [PhotView]()
-- [ButterKnife]()
-- [RecyclerView]()
-- [Universal-Image-Loader]()
-- [Logger]()
+- [PhotView](https://github.com/chrisbanes/PhotoView)
+- [ButterKnife](https://github.com/JakeWharton/butterknife)
+- [RecyclerView](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html)
+- [Universal-Image-Loader](https://github.com/nostra13/Android-Universal-Image-Loader)
+- [Logger](https://github.com/orhanobut/logger)
 
 # 致谢
 -	[Bmob后端云](http://www.bmob.cn/)
