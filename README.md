@@ -16,6 +16,12 @@
  Bmob后端云的key位于common文件夹的Config.java中
  public static String applicationId = "";
  在这里替换为自己在Bmob官网申请的key
+ 
+ 百度地图的key位置AndroidManifest.xml文件中
+  <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="6pmDLTeKWRSFhCcdEpkjsIiXA9EYujSV"/>
+  建议替换为自己在百度地图开发者中心自己申请的开发者key
 ```
 # 截图
 <img src="screenshots/2016-11-04-230257.png" width=30% height=55% /><img src="screenshots/2016-11-04-230236.png" width=30% height=55% /><img src="screenshots/2016-11-04-230655.png" width=30% height=55% />
