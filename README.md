@@ -11,7 +11,12 @@
 - 支持将好友加入黑名单
 - 支持好友圈发表动态
 
-
+# Bmob Key & BaiduMap Key
+```
+ Bmob后端云的key位于common文件夹的Config.java中
+ public static String applicationId = "";
+ 在这里替换为自己在Bmob官网申请的key
+```
 # 截图
 <img src="screenshots/2016-11-04-230257.png" width=30% height=55% /><img src="screenshots/2016-11-04-230236.png" width=30% height=55% /><img src="screenshots/2016-11-04-230655.png" width=30% height=55% />
 <img src="screenshots/2016-11-04-225812.png" width=30% height=55% /><img src="screenshots/2016-11-04-225654.png" width=30% height=55% /><img src="screenshots/2016-11-04-225520.png" width=30% height=55% /><img src="screenshots/2016-11-04-225947.png" width=30% height=55% /><img src="screenshots/2016-11-04-230614.png" width=30% height=55% /><img src="screenshots/2016-11-04-225833.png" width=30% height=55% />
